@@ -68,7 +68,6 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
         ${effectiveExpanded ? 'w-[240px]' : 'w-[120px]'}
         ${className}
       `}
-      style={{ transformOrigin: 'left center' }}
     >
       {/* Top Section - Nav Items */}
       <div className="flex flex-col gap-4">
@@ -81,10 +80,10 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
               key={item.path}
               to={item.path}
               className={`
-                flex items-center gap-4
+                flex items-center
                 rounded-[var(--radius-small)]
-                transition-all duration-200
-                ${effectiveExpanded ? 'px-4 py-4' : 'w-14 h-14 justify-center'}
+                transition-colors duration-200
+                ${effectiveExpanded ? 'gap-4 px-4 py-4' : 'w-14 h-14 justify-center'}
                 ${isActive
                   ? 'bg-[var(--surface-neutral-x-weak)]'
                   : 'hover:bg-[var(--surface-neutral-xx-weak)]'
@@ -95,26 +94,26 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
                 name={item.icon}
                 size={24}
                 className={`
-                  transition-colors duration-200
+                  shrink-0 transition-colors duration-200
                   ${isActive
                     ? 'text-[var(--icon-neutral-xx-strong)]'
                     : 'text-[var(--icon-neutral-x-strong)]'
                   }
                 `}
               />
-              <span
-                className={`
-                  font-medium text-base leading-6 whitespace-nowrap
-                  transition-opacity duration-300
-                  ${effectiveExpanded ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}
-                  ${isActive
-                    ? 'text-[var(--text-neutral-xx-strong)]'
-                    : 'text-[var(--text-neutral-x-strong)]'
-                  }
-                `}
-              >
-                {item.label}
-              </span>
+              {effectiveExpanded && (
+                <span
+                  className={`
+                    font-medium text-base leading-6 whitespace-nowrap
+                    ${isActive
+                      ? 'text-[var(--text-neutral-xx-strong)]'
+                      : 'text-[var(--text-neutral-x-strong)]'
+                    }
+                  `}
+                >
+                  {item.label}
+                </span>
+              )}
             </NavLink>
           );
         })}
@@ -125,27 +124,23 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
         {/* Account */}
         <div
           className={`
-            flex items-center justify-center
+            flex items-center
             bg-[var(--surface-neutral-x-weak)]
             rounded-[var(--radius-small)]
-            ${effectiveExpanded ? 'px-4 py-3' : 'w-14 h-14'}
+            ${effectiveExpanded ? 'gap-4 px-4 py-3' : 'w-14 h-14 justify-center'}
           `}
         >
           <img
             src={avatarSmall}
             alt="Account"
-            className="w-8 h-8 rounded-[var(--radius-xx-small)] object-cover"
+            className="w-8 h-8 shrink-0 rounded-[var(--radius-xx-small)] object-cover"
             style={{ boxShadow: 'var(--shadow-100)' }}
           />
-          <span
-            className={`
-              ml-4 font-medium text-base text-[var(--text-neutral-x-strong)]
-              transition-opacity duration-300
-              ${effectiveExpanded ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}
-            `}
-          >
-            Account
-          </span>
+          {effectiveExpanded && (
+            <span className="font-medium text-base text-[var(--text-neutral-x-strong)]">
+              Account
+            </span>
+          )}
         </div>
 
         {/* Expand/Collapse Button - hidden on tablet */}
@@ -153,29 +148,25 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
           <button
             onClick={toggleNav}
             className={`
-              flex items-center justify-center
+              flex items-center
               bg-[var(--surface-neutral-x-weak)]
               rounded-[var(--radius-small)]
-              transition-all duration-200
+              transition-colors duration-200
               hover:bg-[var(--surface-neutral-xx-weak)]
-              ${effectiveExpanded ? 'px-4 py-4' : 'w-14 h-14'}
+              ${effectiveExpanded ? 'gap-4 px-4 py-4' : 'w-14 h-14 justify-center'}
             `}
             aria-label={effectiveExpanded ? 'Collapse navigation' : 'Expand navigation'}
           >
             <Icon
               name={effectiveExpanded ? 'arrow-left-from-line' : 'arrow-right-from-line'}
               size={24}
-              className="text-[var(--icon-neutral-x-strong)]"
+              className="shrink-0 text-[var(--icon-neutral-x-strong)]"
             />
-            <span
-              className={`
-                ml-4 font-medium text-base text-[var(--text-neutral-x-strong)]
-                transition-opacity duration-300
-                ${effectiveExpanded ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}
-              `}
-            >
-              Collapse
-            </span>
+            {effectiveExpanded && (
+              <span className="font-medium text-base text-[var(--text-neutral-x-strong)]">
+                Collapse
+              </span>
+            )}
           </button>
         )}
       </div>
