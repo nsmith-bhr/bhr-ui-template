@@ -65,7 +65,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
         bg-white
         pt-6 pb-10 px-8
         transition-[width] duration-300 ease-in-out
-        ${effectiveExpanded ? 'w-[240px]' : 'w-[120px]'}
+        ${effectiveExpanded ? 'w-[240px] delay-0' : 'w-[120px] delay-[50ms]'}
         ${className}
       `}
     >
@@ -105,7 +105,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
                 className={`
                   font-medium text-base leading-6 whitespace-nowrap
                   transition-opacity duration-300
-                  ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
+                  ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden delay-0'}
                   ${isActive
                     ? 'text-[var(--text-neutral-xx-strong)]'
                     : 'text-[var(--text-neutral-x-strong)]'
@@ -140,7 +140,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
             className={`
               font-medium text-base text-[var(--text-neutral-x-strong)]
               transition-opacity duration-300
-              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
+              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden delay-0'}
             `}
           >
             Account
@@ -170,7 +170,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
               className={`
                 font-medium text-base text-[var(--text-neutral-x-strong)]
                 transition-opacity duration-300
-                ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
+                ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden delay-0'}
               `}
             >
               Collapse
