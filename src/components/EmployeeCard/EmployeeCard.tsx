@@ -1,6 +1,5 @@
 import type { Employee } from '../../data/employees';
 import { Icon } from '../Icon';
-import avatarLarge from '../../assets/images/avatar-large.png';
 
 interface EmployeeCardProps {
   employee: Employee;
@@ -11,7 +10,7 @@ export function EmployeeCard({ employee }: EmployeeCardProps) {
     <div className="flex items-start gap-6 p-6">
       {/* Avatar */}
       <img
-        src={avatarLarge}
+        src={employee.avatar}
         alt={employee.name}
         className="w-[88px] h-[88px] rounded-[var(--radius-small)] object-cover shrink-0"
         style={{ boxShadow: 'var(--shadow-100)' }}
