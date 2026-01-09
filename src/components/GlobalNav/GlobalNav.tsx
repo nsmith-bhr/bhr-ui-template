@@ -105,7 +105,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
                 className={`
                   font-medium text-base leading-6 whitespace-nowrap
                   transition-opacity duration-300
-                  ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+                  ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
                   ${isActive
                     ? 'text-[var(--text-neutral-xx-strong)]'
                     : 'text-[var(--text-neutral-x-strong)]'
@@ -140,7 +140,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
             className={`
               font-medium text-base text-[var(--text-neutral-x-strong)]
               transition-opacity duration-300
-              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
             `}
           >
             Account
@@ -170,7 +170,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
               className={`
                 font-medium text-base text-[var(--text-neutral-x-strong)]
                 transition-opacity duration-300
-                ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+                ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden'}
               `}
             >
               Collapse
