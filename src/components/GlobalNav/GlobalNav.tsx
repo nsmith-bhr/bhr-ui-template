@@ -101,19 +101,19 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
                   }
                 `}
               />
-              {effectiveExpanded && (
-                <span
-                  className={`
-                    font-medium text-base leading-6 whitespace-nowrap
-                    ${isActive
-                      ? 'text-[var(--text-neutral-xx-strong)]'
-                      : 'text-[var(--text-neutral-x-strong)]'
-                    }
-                  `}
-                >
-                  {item.label}
-                </span>
-              )}
+              <span
+                className={`
+                  font-medium text-base leading-6 whitespace-nowrap
+                  transition-opacity duration-300
+                  ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+                  ${isActive
+                    ? 'text-[var(--text-neutral-xx-strong)]'
+                    : 'text-[var(--text-neutral-x-strong)]'
+                  }
+                `}
+              >
+                {item.label}
+              </span>
             </NavLink>
           );
         })}
@@ -136,11 +136,15 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
             className="w-8 h-8 shrink-0 rounded-[var(--radius-xx-small)] object-cover"
             style={{ boxShadow: 'var(--shadow-100)' }}
           />
-          {effectiveExpanded && (
-            <span className="font-medium text-base text-[var(--text-neutral-x-strong)]">
-              Account
-            </span>
-          )}
+          <span
+            className={`
+              font-medium text-base text-[var(--text-neutral-x-strong)]
+              transition-opacity duration-300
+              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+            `}
+          >
+            Account
+          </span>
         </div>
 
         {/* Expand/Collapse Button - hidden on tablet */}
@@ -162,11 +166,15 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
               size={24}
               className="shrink-0 text-[var(--icon-neutral-x-strong)]"
             />
-            {effectiveExpanded && (
-              <span className="font-medium text-base text-[var(--text-neutral-x-strong)]">
-                Collapse
-              </span>
-            )}
+            <span
+              className={`
+                font-medium text-base text-[var(--text-neutral-x-strong)]
+                transition-opacity duration-300
+                ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 pointer-events-none'}
+              `}
+            >
+              Collapse
+            </span>
           </button>
         )}
       </div>
