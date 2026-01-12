@@ -50,7 +50,7 @@ export function Dropdown({ label, options, value, onChange, className = '' }: Dr
           inline-flex items-center justify-between gap-2
           min-w-[200px] h-10
           px-4 py-2
-          bg-white
+          bg-[var(--surface-neutral-white)]
           border border-[var(--border-neutral-medium)]
           rounded-[var(--radius-full)]
           text-[15px] text-[var(--text-neutral-strong)]
@@ -82,7 +82,7 @@ export function Dropdown({ label, options, value, onChange, className = '' }: Dr
           className="
             absolute z-50 mt-2
             min-w-[200px]
-            bg-white
+            bg-[var(--surface-neutral-white)]
             border border-[var(--border-neutral-medium)]
             rounded-[var(--radius-small)]
             shadow-lg

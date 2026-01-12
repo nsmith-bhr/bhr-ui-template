@@ -10,7 +10,7 @@ export function GlobalHeader({ className = '' }: GlobalHeaderProps) {
     <header
       className={`
         flex items-center justify-between gap-6
-        bg-white
+        bg-[var(--surface-neutral-white)]
         py-8 pr-10
         max-w-[2000px]
         ${className}
@@ -31,7 +31,7 @@ export function GlobalHeader({ className = '' }: GlobalHeaderProps) {
             className="
               flex items-center gap-2
               h-8 px-4 py-2
-              bg-white
+              bg-[var(--surface-neutral-white)]
               border border-[var(--border-neutral-medium)]
               rounded-[var(--radius-full)]
             "

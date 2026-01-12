@@ -92,6 +92,52 @@
   /* Shadows */
   --shadow-100: 1px 1px 0px 1px rgba(56, 49, 47, 0.04);
   --shadow-300: 1px 1px 0px 2px rgba(56, 49, 47, 0.03);
+
+  /* Additional tokens for theming */
+  --color-link: #2563eb;
+  --surface-selected-weak: #f0f9ed;
+}
+
+/* ================================
+   Dark Mode
+   ================================ */
+
+:root.dark {
+  /* Primary Colors - closer to logo, slightly darker and desaturated */
+  --color-primary-strong: #46a318;
+  --color-primary-medium: #5ab01c;
+
+  /* Text Colors - invert to light */
+  --text-neutral-xx-strong: #f5f3f1;
+  --text-neutral-x-strong: #e5e2e0;
+  --text-neutral-strong: #d5d0cd;
+  --text-neutral-medium: #a8a3a0;
+  --text-neutral-weak: #8a8582;
+
+  /* Icon Colors */
+  --icon-neutral-xx-strong: #f5f3f1;
+  --icon-neutral-x-strong: #e5e2e0;
+  --icon-neutral-strong: #a8a3a0;
+  --icon-neutral-medium: #8a8582;
+
+  /* Surface Colors - dark backgrounds */
+  --surface-neutral-white: #1a1a1a;
+  --surface-neutral-xx-weak: #242422;
+  --surface-neutral-x-weak: #2d2d2a;
+
+  /* Border Colors */
+  --border-neutral-xx-weak: #3a3935;
+  --border-neutral-x-weak: #424039;
+  --border-neutral-weak: #4a4744;
+  --border-neutral-medium: #5a5754;
+
+  /* Shadows - more pronounced for dark mode */
+  --shadow-100: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-300: 0 2px 6px rgba(0, 0, 0, 0.4);
+
+  /* Additional tokens */
+  --color-link: #60a5fa;
+  --surface-selected-weak: #1a3d1a;
 }
 
 /* ================================
@@ -124,7 +170,7 @@ h1 {
   font-size: 44px;
   font-weight: 700;
   line-height: 52px;
-  color: #2e7918;
+  color: var(--color-primary-strong);
   margin: 0;
 }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Icon } from '../Icon';
+import { useTheme } from '../../contexts/ThemeContext';
 import avatarSmall from '../../assets/images/avatar-small.png';
 
 const NAV_STORAGE_KEY = 'bhr-nav-expanded';
@@ -32,6 +33,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
   });
   const [isTablet, setIsTablet] = useState(false);
   const location = useLocation();
+  const { isDark, toggleTheme } = useTheme();
 
   // Check for tablet viewport
   useEffect(() => {
@@ -62,7 +64,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
       className={`
         fixed left-0 top-0 h-full z-50
         flex flex-col justify-between
-        bg-white
+        bg-[var(--surface-neutral-white)]
         pt-6 pb-10 px-8
         transition-[width] duration-300 ease-in-out
         ${effectiveExpanded ? 'w-[240px] delay-0' : 'w-[120px] delay-[50ms]'}
@@ -96,7 +98,7 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
                 className={`
                   shrink-0 transition-colors duration-200
                   ${isActive
-                    ? 'text-[var(--icon-neutral-xx-strong)]'
+                    ? 'text-[var(--color-primary-strong)]'
                     : 'text-[var(--icon-neutral-x-strong)]'
                   }
                 `}
@@ -119,8 +121,36 @@ export function GlobalNav({ className = '' }: GlobalNavProps) {
         })}
       </div>
 
-      {/* Bottom Section - Account and Expand/Collapse */}
+      {/* Bottom Section - Theme Toggle, Account, and Expand/Collapse */}
       <div className="flex flex-col gap-3">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className={`
+            flex items-center
+            rounded-[var(--radius-small)]
+            transition-colors duration-200
+            hover:bg-[var(--surface-neutral-xx-weak)]
+            ${effectiveExpanded ? 'gap-4 px-4 py-4' : 'w-14 h-14 justify-center'}
+          `}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <Icon
+            name={isDark ? 'sun' : 'moon'}
+            size={24}
+            className="shrink-0 text-[var(--icon-neutral-x-strong)]"
+          />
+          <span
+            className={`
+              font-medium text-base text-[var(--text-neutral-x-strong)]
+              transition-opacity duration-300
+              ${effectiveExpanded ? 'opacity-100 delay-[50ms]' : 'opacity-0 w-0 overflow-hidden delay-0'}
+            `}
+          >
+            {isDark ? 'Light mode' : 'Dark mode'}
+          </span>
+        </button>
+
         {/* Account */}
         <div
           className={`

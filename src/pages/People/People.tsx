@@ -113,7 +113,7 @@ export function People() {
         {/* Search */}
         <div className="flex-1 max-w-[440px]">
           <div
-            className="flex items-center gap-2 h-10 px-4 py-2 bg-white border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]"
+            className="flex items-center gap-2 h-10 px-4 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
             <Icon name="magnifying-glass" size={16} className="text-[var(--icon-neutral-strong)]" />
@@ -146,7 +146,7 @@ export function People() {
       {/* Employee List */}
       <div className="space-y-8">
         {Object.entries(groupedEmployees).map(([groupName, groupEmployees]) => (
-          <div key={groupName} className="bg-white rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+          <div key={groupName} className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
             {/* Group Header */}
             <div className="px-6 py-4">
               <h2

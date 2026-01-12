@@ -80,11 +80,11 @@ export function Files() {
       <div className="flex items-center justify-between pr-10 pt-10 pb-6 pl-8">
         <h1>Files</h1>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 h-10 px-5 bg-white border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] font-medium text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+          <button className="flex items-center gap-2 h-10 px-5 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] font-medium text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
             <Icon name="arrow-up-from-bracket" size={16} />
             <span>Upload file</span>
           </button>
-          <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-white hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+          <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
             <Icon name="table-cells" size={16} />
           </button>
         </div>
@@ -123,7 +123,7 @@ export function Files() {
         {/* Main Content */}
         <div className="flex-1 pr-10 pl-6 pb-10 overflow-y-auto">
           {/* File List Card */}
-          <div className="bg-white rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+          <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
             {/* Header Row */}
             <div className="flex items-center justify-between px-6 py-4">
               <h2
@@ -137,7 +137,7 @@ export function Files() {
                 <div className="relative">
                   <button
                     onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-                    className="flex items-center gap-2 h-10 px-4 bg-white border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+                    className="flex items-center gap-2 h-10 px-4 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)] text-[15px] text-[var(--text-neutral-strong)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
                   >
                     <span className="text-[var(--text-neutral-medium)]">Sort by</span>
                     <span className="font-medium">
@@ -151,7 +151,7 @@ export function Files() {
                         className="fixed inset-0 z-10"
                         onClick={() => setSortDropdownOpen(false)}
                       />
-                      <div className="absolute right-0 mt-2 w-[240px] bg-white border border-[var(--border-neutral-x-weak)] rounded-lg shadow-lg z-20 py-2">
+                      <div className="absolute right-0 mt-2 w-[240px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-lg shadow-lg z-20 py-2">
                         {sortOptions.map((option) => (
                           <button
                             key={option.value}
@@ -174,12 +174,12 @@ export function Files() {
                 </div>
 
                 {/* Download Button */}
-                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-white hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
                   <Icon name="arrow-down-to-line" size={16} />
                 </button>
 
                 {/* Delete Button */}
-                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-white hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+                <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
                   <Icon name="trash-can" size={16} />
                 </button>
               </div>
@@ -213,7 +213,7 @@ export function Files() {
                   <div key={file.id}>
                     <div
                       className={`flex items-center gap-4 px-6 py-4 transition-colors ${
-                        isSelected ? 'bg-[#f0f9ed]' : 'hover:bg-[var(--surface-neutral-xx-weak)]'
+                        isSelected ? 'bg-[var(--surface-selected-weak)]' : 'hover:bg-[var(--surface-neutral-xx-weak)]'
                       }`}
                     >
                       {/* Checkbox */}

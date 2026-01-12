@@ -28,7 +28,7 @@ export function Button({
 
   const variantStyles = {
     standard: `
-      bg-white
+      bg-[var(--surface-neutral-white)]
       border border-[var(--border-neutral-medium)]
       text-[var(--text-neutral-strong)]
       hover:bg-[var(--surface-neutral-xx-weak)]

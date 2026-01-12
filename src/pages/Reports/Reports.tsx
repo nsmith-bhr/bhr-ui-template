@@ -28,7 +28,7 @@ export function Reports() {
         <h1>Analytics</h1>
         <div className="flex items-center gap-4">
           {/* Search */}
-          <div className="flex items-center gap-2 h-10 px-4 py-2 bg-white border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]">
+          <div className="flex items-center gap-2 h-10 px-4 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]">
             <Icon name="magnifying-glass" size={16} className="text-[var(--icon-neutral-strong)]" />
             <input
               type="text"
@@ -84,7 +84,7 @@ export function Reports() {
         {/* Ask a Question Section */}
         <div className="mb-8">
           {/* White card wrapper */}
-          <div className="bg-white rounded-lg p-6">
+          <div className="bg-[var(--surface-neutral-white)] rounded-lg p-6">
             <div className="mb-5">
               <TextArea placeholder="Ask a question about your data..." />
             </div>
@@ -132,7 +132,7 @@ export function Reports() {
             {insights.map((insight) => (
               <div
                 key={insight.id}
-                className="p-6 bg-white border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-small)] hover:border-[var(--color-primary-strong)] transition-colors cursor-pointer"
+                className="p-6 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-x-weak)] rounded-[var(--radius-small)] hover:border-[var(--color-primary-strong)] transition-colors cursor-pointer"
               >
                 <div className="mb-4">
                   {insight.icon === 'document' && (
@@ -173,7 +173,7 @@ export function Reports() {
             </h2>
           </div>
 
-          <div className="bg-white rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+          <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
             <div className="px-6 py-6">
               <table className="w-full">
                 <thead>

@@ -20,7 +20,7 @@ export function Gridlet({
     <div
       className={`
         flex flex-col
-        bg-white
+        bg-[var(--surface-neutral-white)]
         border border-[var(--border-neutral-x-weak)]
         rounded-[var(--radius-small)]
         overflow-hidden

@@ -40,6 +40,8 @@ import {
   PieChart,
   FileText,
   CircleDollarSign,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 export type IconName =
@@ -74,7 +76,9 @@ export type IconName =
   | 'id-card-lucide'
   | 'pie-chart-lucide'
   | 'file-text-lucide'
-  | 'circle-dollar-lucide';
+  | 'circle-dollar-lucide'
+  | 'sun'
+  | 'moon';
 
 interface IconProps {
   name: IconName;
@@ -163,6 +167,14 @@ export function Icon({ name, size = 24, className = '', variant = 'solid', style
 
   if (name === 'circle-dollar-lucide') {
     return <CircleDollarSign size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'sun') {
+    return <Sun size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'moon') {
+    return <Moon size={size} className={className} strokeWidth={1.5} />;
   }
 
   // Handle Font Awesome icons

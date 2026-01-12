@@ -60,7 +60,7 @@ function AppLayout({ children }: AppLayoutProps) {
   const navWidth = effectiveExpanded ? 240 : 120;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--surface-neutral-white)]">
       {/* Global Navigation */}
       <GlobalNav />
 

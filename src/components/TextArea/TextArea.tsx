@@ -47,7 +47,7 @@ export function TextArea({
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
-          className="w-full h-16 pl-5 pr-14 bg-white rounded-[6px] text-[15px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none"
+          className="w-full h-16 pl-5 pr-14 bg-[var(--surface-neutral-white)] rounded-[6px] text-[15px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none"
         />
       </div>
       {/* Circle arrow up icon */}

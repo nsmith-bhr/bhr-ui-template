@@ -72,7 +72,7 @@ export function Hiring() {
       </div>
 
       {/* Card with Table */}
-      <div className="bg-white rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
+      <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] overflow-hidden">
         {/* Actions Bar */}
         <div className="flex items-center justify-between px-6 py-4">
           <Button icon="circle-user" variant="standard">
@@ -84,7 +84,7 @@ export function Hiring() {
               {openCount} of {totalCount} open · Show
             </span>
             <Dropdown options={statusOptions} value={filterStatus} onChange={setFilterStatus} />
-            <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-white hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
+            <button className="inline-flex items-center justify-center w-10 h-10 rounded-[var(--radius-full)] border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path
                   d="M8 11L8 2M8 11L5 8M8 11L11 8M2 14L14 14"
