@@ -36,7 +36,7 @@ export function Home() {
 
       {/* Gridlet Dashboard */}
       <div
-        className="grid gap-8"
+        className="grid gap-5"
         style={{
           gridTemplateColumns: 'repeat(3, minmax(300px, 1fr))',
           gridTemplateRows: 'auto',
