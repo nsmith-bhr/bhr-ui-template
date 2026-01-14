@@ -209,17 +209,21 @@ export function Payroll() {
             </div>
 
             {/* Updates Section */}
-            <div className="bg-[var(--surface-neutral-xx-weak)] rounded-[var(--radius-medium)] p-6">
-              <div className="flex items-start gap-3 mb-3">
-                <Icon name="circle-info" size={20} className="text-[var(--color-primary-strong)] mt-1" />
-                <h3 className="text-[18px] font-semibold text-[var(--text-neutral-x-strong)]">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <Icon name="arrows-rotate" size={24} className="text-[var(--color-primary-strong)]" />
+                <h3 className="text-[18px] font-semibold text-[var(--color-primary-strong)]">
                   Updates since last payroll
                 </h3>
               </div>
               <p className="text-[15px] text-[var(--text-neutral-medium)] mb-4 leading-relaxed">
                 {updatesText}
               </p>
-              <button className="px-4 py-2 text-[14px] font-medium text-[var(--text-neutral-x-strong)] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-small)] hover:bg-[var(--surface-neutral-x-weak)] transition-colors">
+              <button
+                className="h-[40px] px-5 text-[15px] font-semibold text-[#48413f] bg-white border border-[#c6c2bf] rounded-full hover:bg-[var(--surface-neutral-xx-weak)] transition-colors inline-flex items-center gap-2"
+                style={{ boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)' }}
+              >
+                <Icon name="link" size={16} className="text-[#48413f]" />
                 Jump to report
               </button>
             </div>

@@ -50,6 +50,7 @@ import {
   faShield,
   faCheckCircle,
   faLink,
+  faArrowsRotate,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -126,6 +127,7 @@ export type IconName =
   | 'shield'
   | 'check-circle'
   | 'link'
+  | 'arrows-rotate'
   | 'home-lucide'
   | 'user-circle-lucide'
   | 'users-lucide'
@@ -200,6 +202,7 @@ const faIconMap = {
   'shield': faShield,
   'check-circle': faCheckCircle,
   'link': faLink,
+  'arrows-rotate': faArrowsRotate,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {
