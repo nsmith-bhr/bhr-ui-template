@@ -45,12 +45,25 @@
 - Mock data: 16 files in `src/data/files.ts`
 
 ### 7. Payroll (`src/pages/Payroll/`)
-- Horizontal scrollable date selector with selected states and notification badges
-- Main payroll card with title, icon, and stats (88 people, $1,234 extra pay, 113 timesheets)
+- **Responsive date selector** with ResizeObserver-based card visibility:
+  - Cards are 160px wide with 20px minimum gap
+  - Cards disappear completely (not partially) when viewport shrinks
+  - Remaining cards redistribute using justify-between
+  - Arrow button (40x40px circular) fixed on right
+  - Grey 2px horizontal line behind all cards
+  - Selected card: beige background (`--surface-neutral-xx-weak`) with green border
+  - Active date number box: solid green background with white text
+  - Idle date number box: light beige background with green text
+  - Notification badge positioned at top-right of icon box
+- **Stats cards** (horizontal layout matching Card/Info Figma component):
+  - 48x48px icon boxes with `--surface-neutral-xx-weak` background
+  - Value: 18px semibold, Label: 13px regular
+  - Stats: 88 people, $1,234 extra pay, 113 timesheets
 - **Functional reminders** section with working checkboxes and strikethrough on completion
-- Updates section with info card
-- Right sidebar with Start payroll button, due date, details, and delete option
-- Mock data: Dates, stats, reminders, details in `src/data/payrollData.ts`
+- **Updates section** with arrows-rotate (refresh) icon, no grey background container
+- **Right sidebar**: Start payroll button (48px, 18px text), 44x44px icon containers, global button styles
+- **Dark mode support**: All colors use CSS variables that swap via `:root.dark`
+- Mock data: 12 payroll dates (Jan-April), stats, reminders, details in `src/data/payrollData.ts`
 
 ### 8. Settings (`src/pages/Settings/`)
 - Two-column layout: Left sidebar (280px) + Main content card
@@ -76,7 +89,7 @@
 ### Icon (`src/components/Icon/`)
 - Wraps Font Awesome + Lucide icons
 - **Settings page icons**: lock, thumbs-up, heart, sliders, bell, spa, palette, door-open, door-closed, chart-line, plane, graduation-cap, shield, check-circle, link
-- **Payroll page icons**: chevron-right
+- **Payroll page icons**: chevron-right, arrows-rotate (refresh icon for Updates section)
 - **Other icons**: folder, chevron-down, arrow-up-from-bracket, table-cells, arrow-down-to-line, trash-can, file, file-audio, image, circle-info
 - Supports `style` prop for custom colors
 - Lucide icons: PanelLeftOpen, PanelLeftClose, Home, UserCircle, Users, IdCard, PieChart, FileText, CircleDollarSign, Sun, Moon
@@ -116,13 +129,18 @@ h1 {
 - Primary green: `--color-primary-strong: #2e7918`
 - Surface colors, border colors, text colors all defined as CSS variables
 - Spacing and radius tokens available
+- **Dark mode variables** in `:root.dark` selector:
+  - `--surface-neutral-white: #1a1a1a`
+  - `--surface-neutral-xx-weak: #242422`
+  - `--border-neutral-x-weak: #424039`
+  - `--text-neutral-strong: #d5d0cd`
 
 ## Key Data Files
 - `src/data/employees.ts` - 23 employees with departments, divisions, locations
 - `src/data/jobOpenings.ts` - 6 job openings
 - `src/data/analytics.ts` - Insights, reports, suggestion questions
 - `src/data/files.ts` - 16 files with categories and types
-- `src/data/payrollData.ts` - Payroll dates, stats, reminders (with functional checkboxes), details
+- `src/data/payrollData.ts` - 12 payroll dates (Jan-April for wide screens), stats, reminders (with functional checkboxes), details
 - `src/data/settingsData.ts` - Settings navigation items (27 categories), account info, subscription, add-ons, upgrades
 
 ## Layout Patterns
@@ -144,7 +162,32 @@ h1 {
 - Remote: https://github.com/mattcmorrell/bhr-ui-mcp.git
 - All changes committed and pushed
 
+## Dark Mode Implementation
+- Uses CSS variables defined in `src/index.css` with `:root.dark` selector
+- All components should use CSS variables like `var(--surface-neutral-white)` instead of hardcoded colors
+- Do NOT use Tailwind `dark:` prefix classes - they don't work correctly with this setup
+- Variables automatically swap values when `.dark` class is on root element
+
+## Responsive Patterns
+
+### Date Selector (Payroll page)
+```tsx
+const CARD_WIDTH = 160;
+const MIN_GAP = 20;
+const BUTTON_WIDTH = 40;
+
+// ResizeObserver calculates how many cards fit
+const availableWidth = containerWidth - BUTTON_WIDTH - MIN_GAP;
+const maxCards = Math.floor((availableWidth + MIN_GAP) / (CARD_WIDTH + MIN_GAP));
+const visibleDates = payrollDates.slice(0, visibleCardCount);
+
+// Cards use justify-between to distribute evenly
+<div className="flex items-center justify-between flex-1">
+  {visibleDates.map(...)}
+</div>
+```
+
 ## Next Steps
 1. Fix Files page card structure (move header inside card)
 2. Compare with Figma for any other discrepancies
-3. Continue building remaining pages (MyInfo, Payroll if needed)
+3. Continue building remaining pages (MyInfo if needed)
