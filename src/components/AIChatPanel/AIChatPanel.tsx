@@ -158,48 +158,57 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
 
             {/* Footer Input */}
             <div className="bg-[var(--surface-neutral-white)] px-5 pt-4 pb-5 rounded-b-[20px] shrink-0">
-              <div className="relative">
-                {/* AI gradient border wrapper */}
-                <div
-                  className="relative rounded-lg p-[2px]"
-                  style={{
-                    background: 'linear-gradient(93deg, #87C276 0%, #7AB8EE 33.65%, #C198D4 66.83%, #F2A766 96.15%)',
-                    boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04), 2px 2px 0px 2px rgba(56, 49, 47, 0.05)',
-                  }}
-                >
+              {/* AI gradient border wrapper */}
+              <div
+                className="relative rounded-lg p-[2px] h-[86px]"
+                style={{
+                  background: 'linear-gradient(93deg, #87C276 0%, #7AB8EE 33.65%, #C198D4 66.83%, #F2A766 96.15%)',
+                  boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04), 2px 2px 0px 2px rgba(56, 49, 47, 0.05)',
+                }}
+              >
+                <div className="bg-[var(--surface-neutral-white)] rounded-[6px] px-5 pt-4 pb-3 h-full flex flex-col justify-between">
+                  {/* Input field - Top row */}
                   <input
                     type="text"
                     placeholder="Reply..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="w-full h-[64px] pl-5 pr-14 bg-[var(--surface-neutral-white)] rounded-[6px] text-[15px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none"
+                    className="w-full bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none"
                   />
+
+                  {/* Icons row - Bottom */}
+                  <div className="flex items-center justify-between">
+                    {/* Left action icons */}
+                    <div className="flex items-center gap-4">
+                      <button className="hover:opacity-70 transition-opacity" aria-label="Attach file">
+                        <Icon name="paperclip" size={16} className="text-[var(--icon-neutral-xx-strong)]" />
+                      </button>
+                      <button className="hover:opacity-70 transition-opacity" aria-label="Add image">
+                        <Icon name="image" size={16} className="text-[var(--icon-neutral-xx-strong)]" />
+                      </button>
+                    </div>
+
+                    {/* Right icons */}
+                    <div className="flex items-center gap-4">
+                      <button className="hover:opacity-70 transition-opacity" aria-label="Voice input">
+                        <Icon name="microphone" size={16} className="text-[var(--icon-neutral-xx-strong)]" />
+                      </button>
+                      <button
+                        type="button"
+                        className="flex items-center justify-center"
+                        onClick={handleSend}
+                        aria-label="Send message"
+                      >
+                        <Icon
+                          name="circle-arrow-up"
+                          size={16}
+                          className="text-[var(--icon-neutral-xx-strong)]"
+                        />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                {/* Send button */}
-                <button
-                  type="button"
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center"
-                  onClick={handleSend}
-                >
-                  <Icon
-                    name="circle-arrow-up"
-                    size={24}
-                    className="text-[var(--icon-neutral-xx-strong)]"
-                  />
-                </button>
-              </div>
-              {/* Action icons */}
-              <div className="flex items-center gap-5 mt-3">
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Attach file">
-                  <Icon name="paperclip" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
-                </button>
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Add image">
-                  <Icon name="image" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
-                </button>
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Voice input">
-                  <Icon name="microphone" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
-                </button>
               </div>
             </div>
           </div>
