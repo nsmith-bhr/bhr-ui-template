@@ -36,11 +36,18 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+    // Auto-resize textarea
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
   };
 
   return (
@@ -160,21 +167,21 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
             <div className="bg-[var(--surface-neutral-white)] px-5 pt-4 pb-5 rounded-b-[20px] shrink-0">
               {/* AI gradient border wrapper */}
               <div
-                className="relative rounded-lg p-[2px] h-[86px]"
+                className="relative rounded-lg p-[2px] min-h-[86px]"
                 style={{
                   background: 'linear-gradient(93deg, #87C276 0%, #7AB8EE 33.65%, #C198D4 66.83%, #F2A766 96.15%)',
                   boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04), 2px 2px 0px 2px rgba(56, 49, 47, 0.05)',
                 }}
               >
-                <div className="bg-[var(--surface-neutral-white)] rounded-[6px] px-5 pt-4 pb-3 h-full flex flex-col justify-between">
+                <div className="bg-[var(--surface-neutral-white)] rounded-[6px] px-5 pt-4 pb-3 flex flex-col gap-3">
                   {/* Input field - Top row */}
-                  <input
-                    type="text"
+                  <textarea
                     placeholder="Reply..."
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={handleInput}
                     onKeyDown={handleKeyDown}
-                    className="w-full bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none"
+                    rows={1}
+                    className="w-full bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-medium)] outline-none resize-none overflow-hidden"
                   />
 
                   {/* Icons row - Bottom */}
