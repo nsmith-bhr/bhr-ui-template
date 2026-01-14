@@ -33,7 +33,13 @@ export const payrollDates: PayrollDate[] = [
   { id: '3', day: 2, month: 'February', dayOfWeek: 'Friday', isSelected: false, badge: 2 },
   { id: '4', day: 9, month: 'February', dayOfWeek: 'Friday', isSelected: false },
   { id: '5', day: 16, month: 'February', dayOfWeek: 'Friday', isSelected: false },
-  { id: '6', day: 22, month: 'February', dayOfWeek: 'Friday', isSelected: false },
+  { id: '6', day: 23, month: 'February', dayOfWeek: 'Friday', isSelected: false },
+  { id: '7', day: 1, month: 'March', dayOfWeek: 'Friday', isSelected: false },
+  { id: '8', day: 8, month: 'March', dayOfWeek: 'Friday', isSelected: false },
+  { id: '9', day: 15, month: 'March', dayOfWeek: 'Friday', isSelected: false },
+  { id: '10', day: 22, month: 'March', dayOfWeek: 'Friday', isSelected: false },
+  { id: '11', day: 29, month: 'March', dayOfWeek: 'Friday', isSelected: false },
+  { id: '12', day: 5, month: 'April', dayOfWeek: 'Friday', isSelected: false },
 ];
 
 export const payrollStats: PayrollStat[] = [

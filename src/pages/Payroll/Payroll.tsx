@@ -33,7 +33,9 @@ export function Payroll() {
       // So: CARD_WIDTH + (n-1) * (CARD_WIDTH + MIN_GAP) <= availableWidth
       // Simplify: n <= (availableWidth + MIN_GAP) / (CARD_WIDTH + MIN_GAP)
       const maxCards = Math.floor((availableWidth + MIN_GAP) / (CARD_WIDTH + MIN_GAP));
-      setVisibleCardCount(Math.max(1, Math.min(maxCards, payrollDates.length)));
+      const count = Math.max(1, Math.min(maxCards, payrollDates.length));
+      console.log('Container width:', containerWidth, 'Available:', availableWidth, 'Max cards:', maxCards, 'Setting count:', count);
+      setVisibleCardCount(count);
     };
 
     const resizeObserver = new ResizeObserver(calculateVisibleCards);
