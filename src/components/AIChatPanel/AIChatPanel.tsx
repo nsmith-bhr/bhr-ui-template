@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Icon } from '../Icon';
-import { defaultConversation } from '../../data/chatData';
-import type { ChatMessage } from '../../data/chatData';
+import { recentConversations } from '../../data/chatData';
+import type { ChatMessage, ChatConversation } from '../../data/chatData';
 
 interface AIChatPanelProps {
   isOpen: boolean;
@@ -10,8 +10,24 @@ interface AIChatPanelProps {
 
 export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
   const [inputValue, setInputValue] = useState('');
-  const [messages] = useState<ChatMessage[]>(defaultConversation.messages);
-  const title = defaultConversation.title;
+  const [selectedConversation, setSelectedConversation] = useState<ChatConversation>(recentConversations[0]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const messages = selectedConversation.messages;
+  const title = selectedConversation.title;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSend = () => {
     if (inputValue.trim()) {
@@ -40,28 +56,66 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
           {/* White content container */}
           <div className="w-full h-full bg-[var(--surface-neutral-white)] rounded-[20px] flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="h-[62px] px-5 py-4 flex items-center justify-between shrink-0 bg-[var(--surface-neutral-xx-weak)] rounded-t-[20px]">
-              <div className="flex items-center gap-3">
-                <span className="text-[16px] font-medium leading-[24px] text-[var(--text-neutral-x-strong)]">
-                  {title}
-                </span>
-                <Icon name="caret-down" size={10} className="text-[var(--icon-neutral-medium)]" />
-              </div>
-              <div className="flex items-center gap-[6px]">
+            <div className="relative shrink-0 bg-[var(--surface-neutral-xx-weak)] rounded-t-[20px]" ref={dropdownRef}>
+              <div className="h-[62px] px-5 py-4 flex items-center justify-between">
                 <button
-                  className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-xx-small)] hover:bg-[var(--surface-neutral-x-weak)] transition-colors"
-                  aria-label="Expand"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                 >
-                  <Icon name="expand" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+                  <span className="text-[16px] font-medium leading-[24px] text-[var(--text-neutral-x-strong)]">
+                    {title}
+                  </span>
+                  <Icon
+                    name="caret-down"
+                    size={10}
+                    className={`text-[var(--icon-neutral-medium)] transition-transform duration-200 ${
+                      isDropdownOpen ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
-                <button
-                  className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-xx-small)] hover:bg-[var(--surface-neutral-x-weak)] transition-colors"
-                  aria-label="Close"
-                  onClick={onClose}
-                >
-                  <Icon name="xmark" size={16} className="text-[var(--icon-neutral-x-strong)]" />
-                </button>
+                <div className="flex items-center gap-[6px]">
+                  <button
+                    className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-xx-small)] hover:bg-[var(--surface-neutral-x-weak)] transition-colors"
+                    aria-label="Expand"
+                  >
+                    <Icon name="expand" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+                  </button>
+                  <button
+                    className="w-8 h-8 flex items-center justify-center rounded-[var(--radius-xx-small)] hover:bg-[var(--surface-neutral-x-weak)] transition-colors"
+                    aria-label="Close"
+                    onClick={onClose}
+                  >
+                    <Icon name="xmark" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+                  </button>
+                </div>
               </div>
+
+              {/* Dropdown menu */}
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 z-50 mx-1 mb-1 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-small)] shadow-lg overflow-hidden">
+                  {recentConversations.map((conversation) => (
+                    <button
+                      key={conversation.id}
+                      onClick={() => {
+                        setSelectedConversation(conversation);
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`
+                        w-full px-5 py-3 text-left text-[15px]
+                        hover:bg-[var(--surface-neutral-xx-weak)]
+                        transition-colors duration-150
+                        ${
+                          conversation.id === selectedConversation.id
+                            ? 'bg-[var(--surface-neutral-x-weak)] text-[var(--text-neutral-xx-strong)] font-medium'
+                            : 'text-[var(--text-neutral-strong)]'
+                        }
+                      `}
+                    >
+                      {conversation.title}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Content Area */}
@@ -103,7 +157,7 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
             </div>
 
             {/* Footer Input */}
-            <div className="h-[118px] bg-[var(--surface-neutral-white)] p-4 rounded-b-[20px] shrink-0">
+            <div className="bg-[var(--surface-neutral-white)] px-5 pt-4 pb-5 rounded-b-[20px] shrink-0">
               <div className="relative">
                 {/* AI gradient border wrapper */}
                 <div
@@ -130,21 +184,21 @@ export function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                 >
                   <Icon
                     name="circle-arrow-up"
-                    size={20}
-                    className={inputValue.trim() ? 'text-[var(--color-primary-strong)]' : 'text-[var(--icon-neutral-x-weak)]'}
+                    size={24}
+                    className="text-[var(--icon-neutral-xx-strong)]"
                   />
                 </button>
               </div>
               {/* Action icons */}
-              <div className="flex items-center gap-4 mt-2 pl-1">
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors">
-                  <Icon name="paperclip" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+              <div className="flex items-center gap-5 mt-3">
+                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Attach file">
+                  <Icon name="paperclip" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
                 </button>
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors">
-                  <Icon name="image" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Add image">
+                  <Icon name="image" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
                 </button>
-                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors">
-                  <Icon name="microphone" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+                <button className="p-1 hover:bg-[var(--surface-neutral-xx-weak)] rounded transition-colors" aria-label="Voice input">
+                  <Icon name="microphone" size={20} className="text-[var(--icon-neutral-xx-strong)]" />
                 </button>
               </div>
             </div>
