@@ -5,22 +5,30 @@
 - Font Awesome icons + Lucide icons
 - Custom fonts: Fields (headlines), Inter (body)
 - Design tokens defined in `src/index.css`
+- React Router for navigation
 
 ## Pages Completed
 
-### 1. Home
+### 1. Home (`src/pages/Home/`)
 - Dashboard with gridlets
+- Welcome section
 
-### 2. Directory/People (`src/pages/People/`)
+### 2. My Info (`src/pages/MyInfo/`)
+- Personal information form with multiple sections
+- Job information, contact details, emergency contacts
+- Avatar display with user info
+- Mock data: Employee profile information
+
+### 3. Directory/People (`src/pages/People/`)
 - Employee cards with search, grouping by name/department/location/division, department filtering
 - Mock data: 23 employees with realistic avatars from pravatar.cc
 
-### 3. Hiring (`src/pages/Hiring/`)
+### 4. Hiring (`src/pages/Hiring/`)
 - Job openings table with tabs (Job openings, Candidates, Talent pools)
 - Status filter dropdown (Draft and open, Open only, Draft only)
 - Mock data: 6 job openings
 
-### 4. Analytics/Reports (`src/pages/Reports/`)
+### 5. Analytics/Reports (`src/pages/Reports/`)
 - Sidebar navigation with 13 categories
 - AI question input using TextArea component with gradient border
 - Suggestion question cards
@@ -28,7 +36,7 @@
 - Recently viewed reports table (16 reports)
 - Layout: Header at top spanning full width, sidebar + main content below
 
-### 5. Files (`src/pages/Files/`) - NEEDS FIXES
+### 6. Files (`src/pages/Files/`)
 - Sidebar with category navigation (All files, Signature Templates, Benefits Docs, Payroll, Trainings, Company Policies)
 - File list with working checkboxes and select all
 - Sort dropdown with actual sorting (Name A-Z/Z-A, Date Recent/Oldest, Size Largest/Smallest)
@@ -36,12 +44,26 @@
 - File icons colored by type (red=PDF, blue=image, purple=audio)
 - Mock data: 16 files in `src/data/files.ts`
 
-## Files Page - Discrepancies to Fix
-1. **"All Files" header and sort controls should be INSIDE the white card** - currently above it
-2. Card structure should be:
-   - Header row: "All Files" title + "Sort by" dropdown + download/delete buttons
-   - Select All row: Checkbox with "Select All Files (count)"
-   - File rows below
+### 7. Payroll (`src/pages/Payroll/`)
+- Horizontal scrollable date selector with selected states and notification badges
+- Main payroll card with title, icon, and stats (88 people, $1,234 extra pay, 113 timesheets)
+- **Functional reminders** section with working checkboxes and strikethrough on completion
+- Updates section with info card
+- Right sidebar with Start payroll button, due date, details, and delete option
+- Mock data: Dates, stats, reminders, details in `src/data/payrollData.ts`
+
+### 8. Settings (`src/pages/Settings/`)
+- Two-column layout: Left sidebar (280px) + Main content card
+- **Left sidebar**: 27 settings navigation categories with icons and hover states (green text + white background)
+- **Main content**: White card with Account section
+- Account header with company name, account #, URL, and owner info
+- Vertical sub-tabs (Account Info, Billing, ACA Settings, etc.) with selected state (light gray background)
+- **My Subscription section**: Pro package card, Add-Ons (Payroll, Time Tracking), Job Postings + File Storage combined card
+- **Available Upgrades**: Elite, Benefits Administration, Global Employment cards with light gray icon backgrounds
+- Supercharge Your Workflow promotional card
+- Data section with data center location
+- Mock data: Settings nav items, account info, subscription details in `src/data/settingsData.ts`
+- Settings gear icon in GlobalHeader shows selected state (gray background + green icon) when on /settings
 
 ## Reusable Components Created
 
@@ -53,8 +75,28 @@
 
 ### Icon (`src/components/Icon/`)
 - Wraps Font Awesome + Lucide icons
-- Recently added: folder, chevron-down, arrow-up-from-bracket, table-cells, arrow-down-to-line, trash-can, file, file-audio, image, circle-info
+- **Settings page icons**: lock, thumbs-up, heart, sliders, bell, spa, palette, door-open, door-closed, chart-line, plane, graduation-cap, shield, check-circle, link
+- **Payroll page icons**: chevron-right
+- **Other icons**: folder, chevron-down, arrow-up-from-bracket, table-cells, arrow-down-to-line, trash-can, file, file-audio, image, circle-info
 - Supports `style` prop for custom colors
+- Lucide icons: PanelLeftOpen, PanelLeftClose, Home, UserCircle, Users, IdCard, PieChart, FileText, CircleDollarSign, Sun, Moon
+
+### ProgressBar (`src/components/ProgressBar/`)
+- Created for Settings page (not yet implemented in UI)
+- Horizontal bar with fill percentage
+- Props: value, max, label, color
+
+### GlobalHeader (`src/components/GlobalHeader/`)
+- Logo, search bar, utility icons (inbox, help, settings)
+- Settings gear icon shows selected state when on /settings (gray background + green icon)
+- Uses `useLocation` to detect current route
+
+### GlobalNav (`src/components/GlobalNav/`)
+- Collapsible left navigation with 7 items: Home, My Info, People, Hiring, Reports, Files, Payroll
+- Selected state: Gray background + green icon + bold text
+- Theme toggle button (sun/moon icon)
+- Account section with avatar
+- Expand/collapse functionality with localStorage persistence
 
 ## Global Styles (`src/index.css`)
 
@@ -80,6 +122,8 @@ h1 {
 - `src/data/jobOpenings.ts` - 6 job openings
 - `src/data/analytics.ts` - Insights, reports, suggestion questions
 - `src/data/files.ts` - 16 files with categories and types
+- `src/data/payrollData.ts` - Payroll dates, stats, reminders (with functional checkboxes), details
+- `src/data/settingsData.ts` - Settings navigation items (27 categories), account info, subscription, add-ons, upgrades
 
 ## Layout Patterns
 
