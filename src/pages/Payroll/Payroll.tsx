@@ -58,7 +58,7 @@ export function Payroll() {
             <button
               key={date.id}
               className={`
-                relative w-[160px] rounded-[var(--radius-medium)] px-8 py-6 transition-all flex flex-col gap-4
+                relative w-[160px] rounded-[var(--radius-medium)] px-8 py-6 transition-all flex flex-col gap-4 items-start
                 ${
                   date.isSelected
                     ? 'bg-[#f6f6f4] border border-[var(--color-primary-strong)]'
@@ -71,19 +71,19 @@ export function Payroll() {
                   : '1px 1px 0px 2px rgba(56, 49, 47, 0.03)'
               }}
             >
-              <div className="relative">
+              <div className="relative self-start">
                 {date.badge && (
                   <div className="absolute -top-2 -right-2 w-6 h-6 bg-[var(--color-primary-strong)] text-white rounded-full flex items-center justify-center text-[14px] font-bold">
                     {date.badge}
                   </div>
                 )}
-                <div className={`flex items-center justify-center p-4 rounded-[var(--radius-small)] ${date.isSelected ? 'bg-[var(--color-primary-strong)]' : 'bg-[#f5f4f1]'}`}>
+                <div className={`inline-flex items-center justify-center p-4 rounded-[var(--radius-small)] ${date.isSelected ? 'bg-[var(--color-primary-strong)]' : 'bg-[#f5f4f1]'}`}>
                   <span className={`text-[32px] font-bold leading-none ${date.isSelected ? 'text-white' : 'text-[var(--color-primary-strong)]'}`} style={{ fontFamily: 'Fields, system-ui, sans-serif' }}>
                     {date.day}
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col gap-0">
+              <div className="flex flex-col gap-0 items-start text-left">
                 <span className={`text-[15px] leading-[22px] text-[var(--color-primary-strong)] ${date.isSelected ? 'font-bold' : 'font-medium'}`}>
                   {date.month}
                 </span>
