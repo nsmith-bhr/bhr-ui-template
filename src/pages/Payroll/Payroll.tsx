@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Icon } from '../../components';
 import {
   payrollDates,
@@ -12,8 +12,38 @@ import {
 } from '../../data/payrollData';
 import type { Reminder } from '../../data/payrollData';
 
+const CARD_WIDTH = 160;
+const MIN_GAP = 20;
+const BUTTON_WIDTH = 40;
+
 export function Payroll() {
   const [reminders, setReminders] = useState<Reminder[]>(initialReminders);
+  const [visibleCardCount, setVisibleCardCount] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const calculateVisibleCards = () => {
+      const containerWidth = container.offsetWidth;
+      // Available width = container - button - gap before button
+      const availableWidth = containerWidth - BUTTON_WIDTH - MIN_GAP;
+      // Cards fit: first card is CARD_WIDTH, each additional is CARD_WIDTH + MIN_GAP
+      // So: CARD_WIDTH + (n-1) * (CARD_WIDTH + MIN_GAP) <= availableWidth
+      // Simplify: n <= (availableWidth + MIN_GAP) / (CARD_WIDTH + MIN_GAP)
+      const maxCards = Math.floor((availableWidth + MIN_GAP) / (CARD_WIDTH + MIN_GAP));
+      setVisibleCardCount(Math.max(1, Math.min(maxCards, payrollDates.length)));
+    };
+
+    const resizeObserver = new ResizeObserver(calculateVisibleCards);
+    resizeObserver.observe(container);
+    calculateVisibleCards();
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  const visibleDates = payrollDates.slice(0, visibleCardCount);
 
   const toggleReminder = (id: string) => {
     setReminders(reminders.map(r =>
@@ -49,16 +79,18 @@ export function Payroll() {
       </div>
 
       {/* Date Selector */}
-      <div className="mb-6 relative">
+      <div className="mb-6 relative" ref={containerRef}>
         {/* Grey horizontal line behind cards */}
         <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-[#e4e3e0]" style={{ transform: 'translateY(-50%)' }} />
 
-        <div className="relative flex items-center justify-between w-full">
-          {payrollDates.map((date) => (
+        <div className="relative flex items-center w-full overflow-hidden">
+          {/* Cards container */}
+          <div className="flex items-center justify-between flex-1 mr-5 min-w-0 overflow-hidden">
+            {visibleDates.map((date) => (
             <button
               key={date.id}
               className={`
-                relative w-[160px] rounded-[var(--radius-medium)] px-8 py-6 transition-all flex flex-col gap-4 items-start
+                relative w-[160px] flex-shrink-0 rounded-[var(--radius-medium)] px-8 py-6 transition-all flex flex-col gap-4 items-start
                 ${
                   date.isSelected
                     ? 'bg-[#f6f6f4] border border-[var(--color-primary-strong)]'
@@ -93,8 +125,10 @@ export function Payroll() {
               </div>
             </button>
           ))}
+          </div>
+          {/* Arrow button - always visible */}
           <button
-            className="w-[40px] h-[40px] bg-white border border-[#c6c2bf] rounded-full flex items-center justify-center hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+            className="w-[40px] h-[40px] flex-shrink-0 bg-white border border-[#c6c2bf] rounded-full flex items-center justify-center hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
             style={{ boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)' }}
           >
             <Icon name="chevron-right" size={16} className="text-[var(--color-primary-strong)]" />
