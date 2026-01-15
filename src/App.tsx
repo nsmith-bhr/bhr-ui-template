@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
 import { Home, MyInfo, People, Hiring, Reports, Files, Payroll, Settings } from './pages';
 import { Chat } from './pages/Chat';
+import { ChatTransitionsDemo } from './pages/ChatTransitionsDemo';
+import { TextReflowDemo } from './pages/TextReflowDemo';
+import { TextReflowDemo2 } from './pages/TextReflowDemo2';
 import { ChatProvider } from './contexts/ChatContext';
 
 function App() {
@@ -12,6 +15,11 @@ function App() {
           {/* Chat routes - Full page, no AppLayout */}
           <Route path="/chat" element={<Chat />} />
           <Route path="/chat/:conversationId" element={<Chat />} />
+
+          {/* Demo routes for testing transitions */}
+          <Route path="/chat-transitions-demo" element={<ChatTransitionsDemo />} />
+          <Route path="/text-reflow-demo" element={<TextReflowDemo />} />
+          <Route path="/text-reflow-demo-2" element={<TextReflowDemo2 />} />
 
           {/* Regular routes with AppLayout */}
           <Route

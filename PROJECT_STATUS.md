@@ -187,7 +187,110 @@ const visibleDates = payrollDates.slice(0, visibleCardCount);
 </div>
 ```
 
+## AI Chat Feature (In Progress)
+
+### Overview
+Building a dual-mode AI chat interface:
+1. **Slide-in panel** - Appears on right side of any page when "Ask" button clicked
+2. **Full-screen view** - Dedicated route with sidebar navigation
+
+### Components Created
+
+#### AIChatPanel (`src/components/AIChatPanel/`)
+- Slide-in panel (399px wide) on right side with beige border container
+- Header with conversation title dropdown, expand button, close button
+- Message display with user bubbles (right-aligned, white background) and AI responses
+- Input area with gradient border (86px height), textarea, paperclip/image/microphone icons
+- Expand button navigates to `/chat/:conversationId`
+- State persisted in localStorage: `bhr-chat-panel-open`
+
+#### ChatContext (`src/contexts/ChatContext.tsx`)
+- Centralized state management for conversations
+- Actions: `createNewChat`, `selectConversation`, `addMessage`
+- localStorage persistence for selected conversation
+- Search/filter functionality for conversation list
+
+#### ChatSidebar (`src/components/ChatSidebar/`)
+- 280px wide sidebar for full-screen chat view
+- Header: Green sparkle icon, collapse button (arrows inward), close button
+- New Chat button creates empty conversation
+- "Chats" section with search functionality
+- Scrollable conversation list with active state highlighting
+- No borders (removed for cleaner look)
+
+#### ChatContent (`src/components/ChatContent/`)
+- Main chat display area with rounded grey background (20px radius)
+- User messages: white bubbles, no border, right-aligned
+- AI messages: "BambooHR Assistant" label with green sparkle icon, left-aligned
+- Suggestion chips after AI responses
+- Input: pill-shaped white container (max-width 800px) with shadow on grey background
+- Auto-expanding textarea
+
+#### Chat Page (`src/pages/Chat/`)
+- Full-screen chat view at `/chat` and `/chat/:conversationId`
+- No GlobalHeader, no GlobalNav - completely standalone
+- Two-column layout: ChatSidebar (280px) + ChatContent (flex-1)
+- URL-driven conversation selection
+
+### Navigation Flow
+1. User clicks "Ask" button in GlobalHeader → slide-in panel opens
+2. User clicks expand icon → navigates to `/chat/:id`, panel closes
+3. User clicks collapse (arrows) → returns to home with slide-in panel open
+4. User clicks X → returns to home with chat completely closed
+
+### Data
+- `src/data/chatData.ts` - 15 mock conversations (Employee Onboarding, PTO Policy, Benefits, etc.)
+- Interfaces: `ChatMessage`, `ChatConversation`
+
+### Transition Research (Demo Pages)
+
+#### `/chat-transitions-demo`
+Testing 5 different transition styles for panel → full-screen:
+1. **Expand** - Panel physically grows from right edge (380px → full width)
+2. **Slide Handoff** - Panel exits left, full-screen enters from right
+3. **Slide Fade** - Panel fades in place, full-screen slides over from right
+4. **Zoom** - Panel zooms/scales out from right (0.95 → 1.0 scale)
+5. **Crossfade** - Simple opacity transition
+
+**Current speeds**: 2.7 seconds (slowed 9x for analysis)
+**Findings**:
+- Expand and Zoom anchored to right edge work smoothly
+- Slide-handoff avoids conflicting motion
+- All transitions use `ease-out` timing
+
+#### `/text-reflow-demo-2`
+Testing 7 solutions for text reflow during expansion:
+1. **None** - Standard behavior (distracting line jumps)
+2. **Never Reflow** - Fixed 600px width, content never reflows
+3. **Slide Away/Back** - Content slides off during transition
+4. **Scale Transform** - Content scales (0.95) instead of reflowing
+5. **Delayed Reveal** - Fade out → animate → fade in
+6. **Shell Only** - Container animates, content "snaps" at end
+7. **Crossfade Layouts** - Two versions (narrow/wide) crossfade
+
+**Problem**: Text wrapping/unwrapping during width changes draws eye away from main animation
+**Goal**: Find solution that keeps focus on panel expansion, not text reflow
+
+### Current Status
+- ✅ Slide-in panel functional with localStorage persistence
+- ✅ Full-screen view with sidebar navigation
+- ✅ Conversation list, search, new chat working
+- ✅ URL routing and state management
+- ✅ Expand/collapse buttons wired correctly
+- 🔄 Testing transition styles (Expand and Zoom are favorites)
+- 🔄 Evaluating text reflow solutions
+- ⏳ Need to finalize transition and apply to production components
+
+### Technical Details
+- Animations use CSS `transition-all` with custom durations
+- Right-edge anchoring: `right: 16px` stays constant, width expands leftward
+- Transform origin: `right center` for zoom effects
+- Opacity transitions: Half the duration of main animation (450ms vs 900ms)
+- Background: Grey rounded container (20px radius) on white outer padding
+
 ## Next Steps
-1. Fix Files page card structure (move header inside card)
-2. Compare with Figma for any other discrepancies
-3. Continue building remaining pages (MyInfo if needed)
+1. Choose final transition style and text reflow solution
+2. Apply chosen transition to production Chat components
+3. Speed up animations to production speed (~300ms)
+4. Test dark mode compatibility for all chat components
+5. Polish any remaining styling details

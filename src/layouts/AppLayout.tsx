@@ -6,6 +6,7 @@ import { AIChatPanel } from '../components/AIChatPanel';
 
 const NAV_STORAGE_KEY = 'bhr-nav-expanded';
 const CHAT_PANEL_STORAGE_KEY = 'bhr-chat-panel-open';
+const CHAT_EXPANDED_STORAGE_KEY = 'bhr-chat-expanded';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -18,6 +19,9 @@ function AppLayout({ children }: AppLayoutProps) {
   });
   const [isChatPanelOpen, setIsChatPanelOpen] = useState(() => {
     return localStorage.getItem(CHAT_PANEL_STORAGE_KEY) === 'true';
+  });
+  const [isChatExpanded, setIsChatExpanded] = useState(() => {
+    return localStorage.getItem(CHAT_EXPANDED_STORAGE_KEY) === 'true';
   });
   const [isTablet, setIsTablet] = useState(false);
 
@@ -57,14 +61,25 @@ function AppLayout({ children }: AppLayoutProps) {
       if (isOpen !== isChatPanelOpen) {
         setIsChatPanelOpen(isOpen);
       }
+      const isExpanded = localStorage.getItem(CHAT_EXPANDED_STORAGE_KEY) === 'true';
+      if (isExpanded !== isChatExpanded) {
+        setIsChatExpanded(isExpanded);
+      }
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isChatPanelOpen]);
+  }, [isChatPanelOpen, isChatExpanded]);
 
   const handleCloseChatPanel = () => {
     localStorage.setItem(CHAT_PANEL_STORAGE_KEY, 'false');
+    localStorage.setItem(CHAT_EXPANDED_STORAGE_KEY, 'false');
     setIsChatPanelOpen(false);
+    setIsChatExpanded(false);
+  };
+
+  const handleChatExpandChange = (expanded: boolean) => {
+    localStorage.setItem(CHAT_EXPANDED_STORAGE_KEY, String(expanded));
+    setIsChatExpanded(expanded);
   };
 
   // Check for tablet viewport
@@ -81,7 +96,8 @@ function AppLayout({ children }: AppLayoutProps) {
   const effectiveExpanded = isTablet ? false : isNavExpanded;
   const navWidth = effectiveExpanded ? 240 : 120;
   // Chat panel width (399) + 16px gap - main's pr-10 (40px) = 375px
-  const chatPanelWidth = isChatPanelOpen ? 375 : 0;
+  // When expanded, don't compress main content
+  const chatPanelWidth = (isChatPanelOpen && !isChatExpanded) ? 375 : 0;
 
   return (
     <div className="min-h-screen bg-[var(--surface-neutral-white)]">
@@ -116,7 +132,12 @@ function AppLayout({ children }: AppLayoutProps) {
       </div>
 
       {/* AI Chat Panel */}
-      <AIChatPanel isOpen={isChatPanelOpen} onClose={handleCloseChatPanel} />
+      <AIChatPanel
+        isOpen={isChatPanelOpen}
+        onClose={handleCloseChatPanel}
+        isExpanded={isChatExpanded}
+        onExpandChange={handleChatExpandChange}
+      />
     </div>
   );
 }
