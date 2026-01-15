@@ -2,6 +2,55 @@
 
 A pixel-perfect recreation of the BambooHR application interface, built as a template for IXD (Interaction Design) exploration.
 
+## Branch Strategy
+
+This repo uses a **branch-based workflow** to keep the template clean while allowing experiments:
+
+- **`main` branch** - Clean template for designers to clone and build upon
+  - Contains fully-implemented pages and reusable components
+  - Designers should start here and create their own branches
+  - Contributions can be merged back via Pull Requests
+
+- **`experiments` branch** - Personal experimental work
+  - For trying new features, prototypes, and explorations
+  - Not intended for distribution
+  - Periodically merged with `main` to stay up-to-date
+
+### For Designers Using This Template
+
+```bash
+# Clone the repo
+git clone https://github.com/mattcmorrell/bhr-ui-mcp.git
+cd bhr-ui-mcp
+
+# Create your own branch
+git checkout -b your-feature-name
+
+# Work on your feature, then push when ready
+git push origin your-feature-name
+
+# Create a Pull Request to merge back into main
+```
+
+### For Maintainers
+
+```bash
+# Work on template improvements
+git checkout main
+# ... make changes ...
+git commit -m "Improve Button component"
+git push
+
+# Work on experiments
+git checkout experiments
+# ... make changes ...
+git commit -m "Test new animation library"
+
+# Pull template updates into experiments
+git checkout experiments
+git merge main
+```
+
 ## Tech Stack
 
 - **React 18** + **TypeScript**
