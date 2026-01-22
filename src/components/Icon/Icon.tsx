@@ -18,6 +18,7 @@ import {
   faFolder,
   faChevronDown,
   faChevronRight,
+  faChevronLeft,
   faArrowDown,
   faTrashCan,
   faFile,
@@ -103,6 +104,7 @@ export type IconName =
   | 'folder'
   | 'chevron-down'
   | 'chevron-right'
+  | 'chevron-left'
   | 'arrow-down-to-line'
   | 'trash-can'
   | 'file'
@@ -187,6 +189,7 @@ const faIconMap = {
   'folder-regular': faFolderRegular,
   'chevron-down': faChevronDown,
   'chevron-right': faChevronRight,
+  'chevron-left': faChevronLeft,
   'arrow-down-to-line': faArrowDown,
   'trash-can': faTrashCan,
   'file': faFile,

@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
-import { Home, MyInfo, People, Hiring, Reports, Files, Payroll, Settings } from './pages';
+import { Home, MyInfo, People, Hiring, Reports, Files, Payroll, Settings, Inbox } from './pages';
 import { Chat } from './pages/Chat';
+import { ArtifactWorkspace } from './pages/ArtifactWorkspace';
 import { ChatTransitionsDemo } from './pages/ChatTransitionsDemo';
 import { TextReflowDemo } from './pages/TextReflowDemo';
 import { TextReflowDemo2 } from './pages/TextReflowDemo2';
@@ -34,6 +35,7 @@ function App() {
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/files" element={<Files />} />
                   <Route path="/payroll" element={<Payroll />} />
+                  <Route path="/inbox" element={<Inbox />} />
                   <Route path="/settings" element={<Settings />} />
                 </Routes>
               </AppLayout>
