@@ -7,7 +7,7 @@ interface InboxContentCardProps {
 export function InboxContentCard({ children }: InboxContentCardProps) {
   return (
     <div
-      className="flex-1 flex flex-col"
+      className="flex-1 flex flex-col min-h-0"
       style={{
         maxWidth: '944px',
         backgroundColor: 'var(--surface-neutral-white)',

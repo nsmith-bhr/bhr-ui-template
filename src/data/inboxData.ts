@@ -24,6 +24,7 @@ export interface InboxSubItem {
   id: string;
   label: string;
   count: number;
+  icon?: string;
 }
 
 export interface InboxTab {
@@ -33,6 +34,7 @@ export interface InboxTab {
   badge?: number;
   hasDropdown?: boolean;
   subItems?: InboxSubItem[];
+  icon?: string;
 }
 
 // Mock data for inbox requests
@@ -444,13 +446,15 @@ export const inboxTabs: InboxTab[] = [
   {
     id: 'assigned-to-me',
     label: 'Assigned to Me',
-    hasDropdown: true
+    hasDropdown: true,
+    icon: 'circle-user'
   },
   {
     id: 'inbox',
     label: 'Inbox',
+    icon: 'inbox',
     subItems: [
-      { id: 'approvals', label: 'Approvals', count: 10 },
+      { id: 'approvals', label: 'Approvals', count: 10, icon: 'thumbs-up' },
       { id: 'time-off-requests', label: 'Time Off Requests', count: 2 },
       { id: 'information-updates', label: 'Information Updates', count: 1 },
       { id: 'asset-request', label: 'Asset Request', count: 3 },
@@ -462,15 +466,18 @@ export const inboxTabs: InboxTab[] = [
   {
     id: 'onboarding',
     label: 'Onboarding',
-    badge: 1
+    badge: 1,
+    icon: 'id-badge'
   },
   {
     id: 'completed',
-    label: 'Completed'
+    label: 'Completed',
+    icon: 'check-circle'
   },
   {
     id: 'sent',
-    label: 'Sent'
+    label: 'Sent',
+    icon: 'paper-plane'
   },
 ];
 

@@ -10,7 +10,7 @@ import {
 } from '../../data/inboxData';
 
 export function Inbox() {
-  const [activeTab, setActiveTab] = useState('inbox');
+  const [activeTab, setActiveTab] = useState('approvals');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRequests, setSelectedRequests] = useState<Set<string>>(new Set());
 
@@ -60,13 +60,13 @@ export function Inbox() {
 
   return (
     <div
-      className="flex flex-col h-full"
+      className="flex flex-col flex-1 min-h-0 overflow-hidden"
       style={{
         backgroundColor: 'var(--surface-neutral-xx-weak)',
       }}
     >
-      {/* Page Header */}
-      <div className="px-8 pt-8 pb-6">
+      {/* Page Header - Fixed */}
+      <div className="px-8 pt-8 pb-6 shrink-0">
         <h1
           style={{
             fontFamily: "'Fields', system-ui, sans-serif",
@@ -83,7 +83,7 @@ export function Inbox() {
 
       {/* Main Content Area */}
       <div
-        className="flex-1 flex px-10 pb-10 overflow-hidden"
+        className="flex-1 flex px-10 pb-10 min-h-0 overflow-hidden"
         style={{
           gap: '24px',
         }}
@@ -97,9 +97,9 @@ export function Inbox() {
 
         {/* Content Card */}
         <InboxContentCard>
-          {/* Header with Select All */}
+          {/* Header with Select All - Fixed at top */}
           <div
-            className="flex items-center gap-4 px-5 py-4 border-b"
+            className="flex items-center gap-4 px-5 py-4 border-b shrink-0"
             style={{
               borderColor: 'var(--border-neutral-xx-weak)',
             }}
@@ -170,10 +170,10 @@ export function Inbox() {
             )}
           </div>
 
-          {/* Pagination */}
+          {/* Pagination - Fixed at bottom */}
           {filteredRequests.length > 0 && (
             <div
-              className="border-t"
+              className="border-t shrink-0"
               style={{
                 borderColor: 'var(--border-neutral-xx-weak)',
               }}

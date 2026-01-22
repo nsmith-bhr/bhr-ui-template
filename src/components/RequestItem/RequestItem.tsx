@@ -1,4 +1,3 @@
-import { Avatar } from '../Avatar';
 import { Icon } from '../Icon';
 import type { InboxRequest } from '../../data/inboxData';
 
@@ -184,7 +183,7 @@ export function RequestItem({ request, isSelected, onToggleSelect }: RequestItem
         >
           {isSelected && (
             <Icon
-              name="check"
+              name="check-circle"
               size={12}
               style={{ color: 'white' }}
             />
