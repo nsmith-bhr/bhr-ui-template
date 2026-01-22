@@ -90,36 +90,51 @@ export function InboxSidebar({ tabs, activeTab, onTabChange }: InboxSidebarProps
                   />
                 )}
 
-                {/* Label */}
-                <span style={{ flex: 1 }}>{tab.label}</span>
-
-                {/* Badge and dropdown icon container */}
-                <div className="flex items-center" style={{ gap: '8px' }}>
-                  {/* Badge for items like Onboarding */}
-                  {tab.badge && (
-                    <span
-                      className="inline-flex items-center justify-center min-w-[24px] h-6 px-2 rounded-full"
-                      style={{
-                        backgroundColor: '#d13c30',
-                        color: '#ffffff',
-                        fontSize: '13px',
-                        fontWeight: 600,
-                        lineHeight: '18px',
-                      }}
-                    >
-                      {tab.badge}
-                    </span>
-                  )}
-                  {/* Dropdown icon for parent items */}
-                  {(tab.hasDropdown || hasSubItems) && (
+                {/* Label with inline caret for items without badge */}
+                <span style={{ flex: 1 }} className="flex items-center gap-1">
+                  {tab.label}
+                  {/* Inline dropdown icon for items without badge */}
+                  {(tab.hasDropdown || hasSubItems) && !showParentGreen && !tab.badge && (
                     <Icon
                       name={isExpanded ? 'chevron-up' : 'chevron-down'}
-                      size={16}
+                      size={12}
                       style={{
-                        color: showParentGreen || (isActive && !hasSubItems) ? '#ffffff' : '#48413f',
+                        color: isActive && !hasSubItems ? '#ffffff' : '#777270',
                         flexShrink: 0
                       }}
                     />
+                  )}
+                </span>
+
+                {/* Badge container */}
+                <div className="flex items-center" style={{ gap: '8px' }}>
+                  {/* Badge for items like Onboarding */}
+                  {tab.badge && (
+                    <>
+                      <span
+                        className="inline-flex items-center justify-center min-w-[24px] h-6 px-2 rounded-full"
+                        style={{
+                          backgroundColor: '#d13c30',
+                          color: '#ffffff',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          lineHeight: '18px',
+                        }}
+                      >
+                        {tab.badge}
+                      </span>
+                      {/* Dropdown icon for items with badge */}
+                      {(tab.hasDropdown || hasSubItems) && !showParentGreen && (
+                        <Icon
+                          name={isExpanded ? 'chevron-up' : 'chevron-down'}
+                          size={16}
+                          style={{
+                            color: isActive && !hasSubItems ? '#ffffff' : '#48413f',
+                            flexShrink: 0
+                          }}
+                        />
+                      )}
+                    </>
                   )}
                 </div>
               </button>
