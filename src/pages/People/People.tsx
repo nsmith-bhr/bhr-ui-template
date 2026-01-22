@@ -8,13 +8,13 @@ type ViewMode = 'list' | 'directory' | 'orgChart';
 export function People() {
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
-  const [groupBy, setGroupBy] = useState<GroupBy>('department');
+  const [groupBy, setGroupBy] = useState<GroupBy>('name');
   const [filterDepartment, setFilterDepartment] = useState('all');
 
   // Get unique departments for filter
   const departments = useMemo(() => {
     const unique = Array.from(new Set(employees.map((e) => e.department)));
-    return [{ value: 'all', label: 'All employees' }].concat(
+    return [{ value: 'all', label: 'All Employees' }].concat(
       unique.map((dept) => ({ value: dept, label: dept }))
     );
   }, []);
@@ -105,49 +105,66 @@ export function People() {
         </a>
       </div>
 
-      {/* Actions Bar */}
-      <div className="flex items-center justify-between mb-6">
-        <Button icon="circle-user" variant="standard">
-          New employee
-        </Button>
+      {/* Actions Bar with Tabs */}
+      <div className="flex items-end justify-between border-b border-[var(--border-neutral-x-weak)] mb-6">
+        <div className="pb-4">
+          <Button icon="circle-user" variant="standard">
+            New employee
+          </Button>
+        </div>
 
         {/* View Tabs */}
         <div className="flex items-center" style={{ gap: '24px' }}>
           <button
             onClick={() => setViewMode('list')}
-            className="flex items-center gap-2 pb-2 text-[15px] transition-colors"
+            className="flex items-center gap-2 pb-3 text-[15px] transition-colors relative"
             style={{
               fontWeight: viewMode === 'list' ? 700 : 500,
               color: viewMode === 'list' ? 'var(--color-primary-strong)' : 'var(--text-neutral-medium)',
-              borderBottom: viewMode === 'list' ? '2px solid var(--color-primary-strong)' : 'none',
             }}
           >
             <Icon name="file-lines" size={20} />
             List
+            {viewMode === 'list' && (
+              <span
+                className="absolute left-0 right-0 h-[2px] bg-[var(--color-primary-strong)]"
+                style={{ bottom: '-1px' }}
+              />
+            )}
           </button>
           <button
             onClick={() => setViewMode('directory')}
-            className="flex items-center gap-2 pb-2 text-[15px] transition-colors"
+            className="flex items-center gap-2 pb-3 text-[15px] transition-colors relative"
             style={{
               fontWeight: viewMode === 'directory' ? 700 : 500,
               color: viewMode === 'directory' ? 'var(--color-primary-strong)' : 'var(--text-neutral-medium)',
-              borderBottom: viewMode === 'directory' ? '2px solid var(--color-primary-strong)' : 'none',
             }}
           >
             <Icon name="user-group" size={20} />
             Directory
+            {viewMode === 'directory' && (
+              <span
+                className="absolute left-0 right-0 h-[2px] bg-[var(--color-primary-strong)]"
+                style={{ bottom: '-1px' }}
+              />
+            )}
           </button>
           <button
             onClick={() => setViewMode('orgChart')}
-            className="flex items-center gap-2 pb-2 text-[15px] transition-colors"
+            className="flex items-center gap-2 pb-3 text-[15px] transition-colors relative"
             style={{
               fontWeight: viewMode === 'orgChart' ? 700 : 500,
               color: viewMode === 'orgChart' ? 'var(--color-primary-strong)' : 'var(--text-neutral-medium)',
-              borderBottom: viewMode === 'orgChart' ? '2px solid var(--color-primary-strong)' : 'none',
             }}
           >
             <Icon name="chart-pie-simple" size={20} />
-            Org chart
+            Org Chart
+            {viewMode === 'orgChart' && (
+              <span
+                className="absolute left-0 right-0 h-[2px] bg-[var(--color-primary-strong)]"
+                style={{ bottom: '-1px' }}
+              />
+            )}
           </button>
         </div>
       </div>
@@ -162,7 +179,7 @@ export function People() {
           {/* Filters Bar */}
           <div className="flex items-center gap-4 mb-8">
             {/* Search */}
-            <div className="flex-1 max-w-[440px]">
+            <div className="flex-1">
               <div
                 className="flex items-center gap-2 h-10 px-4 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-full)]"
                 style={{ boxShadow: 'var(--shadow-100)' }}
@@ -170,28 +187,54 @@ export function People() {
                 <Icon name="magnifying-glass" size={16} className="text-[var(--icon-neutral-strong)]" />
                 <input
                   type="text"
-                  placeholder="Search directory..."
+                  placeholder="Search Directory..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 bg-transparent text-[14px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none"
+                  className="flex-1 bg-transparent text-[15px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none"
+                  style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
                 />
               </div>
             </div>
 
-            {/* Group By Dropdown */}
-            <Dropdown
-              label="Group by"
-              options={groupByOptions}
-              value={groupBy}
-              onChange={(value) => setGroupBy(value as GroupBy)}
-            />
+            {/* Group By */}
+            <div className="flex items-center gap-3">
+              <span
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: 'var(--text-neutral-x-strong)',
+                }}
+              >
+                Group by
+              </span>
+              <Dropdown
+                options={groupByOptions}
+                value={groupBy}
+                onChange={(value) => setGroupBy(value as GroupBy)}
+                className="w-[180px]"
+              />
+            </div>
 
-            {/* Department Filter */}
-            <Dropdown
-              options={departments}
-              value={filterDepartment}
-              onChange={setFilterDepartment}
-            />
+            {/* Filter By */}
+            <div className="flex items-center gap-3">
+              <span
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: 'var(--text-neutral-x-strong)',
+                }}
+              >
+                Filter by
+              </span>
+              <Dropdown
+                options={departments}
+                value={filterDepartment}
+                onChange={setFilterDepartment}
+                className="w-[200px]"
+              />
+            </div>
           </div>
 
           {/* Employee List */}
