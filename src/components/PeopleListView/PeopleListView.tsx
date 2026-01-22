@@ -38,62 +38,92 @@ export function PeopleListView({ employees }: PeopleListViewProps) {
     <div>
       {/* Filter Bar */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+        {/* Left Group: Filter + Dropdown + Icon + Count */}
+        <div className="flex items-center gap-2">
+          {/* Filter Button */}
+          <button
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+            style={{ boxShadow: 'var(--shadow-100)' }}
+            aria-label="Filter"
+          >
+            <Icon name="sliders" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+          </button>
+
           {/* All Employees Dropdown */}
           <Dropdown
             options={statusOptions}
             value={filterStatus}
             onChange={setFilterStatus}
+            className="w-[248px]"
           />
 
-          {/* Employee Count */}
-          <div
-            style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '15px',
-              fontWeight: 400,
-              color: 'var(--text-neutral-medium)',
-            }}
-          >
-            {totalItems} employees
-          </div>
-
-          {/* Showing + Active Dropdown */}
-          <div className="flex items-center gap-2">
+          {/* User Group Icon + Count */}
+          <div className="flex items-center gap-2" style={{ marginLeft: '16px' }}>
+            <Icon
+              name="user-group"
+              size={16}
+              className="text-[var(--icon-neutral-strong)]"
+            />
             <span
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '15px',
+                fontSize: '14px',
                 fontWeight: 400,
-                color: 'var(--text-neutral-medium)',
+                lineHeight: '20px',
+                color: 'var(--text-neutral-weak)',
               }}
             >
-              Showing
+              {totalItems}
             </span>
-            <Dropdown
-              options={[
-                { value: 'active', label: 'Active' },
-                { value: 'inactive', label: 'Inactive' },
-              ]}
-              value="active"
-              onChange={() => {}}
-            />
           </div>
         </div>
 
-        {/* Ellipsis Menu */}
-        <button
-          className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
-          aria-label="More options"
-        >
-          <Icon name="ellipsis" size={20} />
-        </button>
+        {/* Right Group: Showing + Active + Ellipsis */}
+        <div className="flex items-center gap-3">
+          {/* Showing Label */}
+          <span
+            style={{
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: '14px',
+              fontWeight: 500,
+              lineHeight: '20px',
+              color: 'var(--text-neutral-x-strong)',
+            }}
+          >
+            Showing
+          </span>
+
+          {/* Active Dropdown */}
+          <Dropdown
+            options={[
+              { value: 'active', label: 'Active' },
+              { value: 'inactive', label: 'Inactive' },
+            ]}
+            value="active"
+            onChange={() => {}}
+            className="w-[166px]"
+          />
+
+          {/* Ellipsis Menu */}
+          <button
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--border-neutral-medium)] bg-[var(--surface-neutral-white)] hover:bg-[var(--surface-neutral-xx-weak)] transition-colors"
+            style={{ boxShadow: 'var(--shadow-100)' }}
+            aria-label="More options"
+          >
+            <Icon name="ellipsis" size={16} className="text-[var(--icon-neutral-x-strong)]" />
+          </button>
+        </div>
       </div>
 
       {/* Table Card */}
       <div
-        className="bg-[var(--surface-neutral-white)] rounded-[16px] border border-[var(--border-neutral-x-weak)] overflow-hidden"
-        style={{ boxShadow: '1px 1px 0px 2px rgba(56, 49, 47, 0.03)' }}
+        style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid #e0e0e0',
+          boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.08)',
+          overflow: 'hidden',
+        }}
       >
         <table className="w-full">
           <thead>
@@ -186,7 +216,7 @@ export function PeopleListView({ employees }: PeopleListViewProps) {
           </tbody>
         </table>
 
-        {/* Pagination inside card */}
+        {/* Pagination */}
         <div className="px-4 py-4 border-t border-[var(--border-neutral-x-weak)]">
           <Pagination
             currentPage={currentPage}

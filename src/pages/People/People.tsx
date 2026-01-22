@@ -75,7 +75,7 @@ export function People() {
   ];
 
   return (
-    <div className="p-10">
+    <div className="p-8 h-full overflow-y-auto">
       {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
         <h1

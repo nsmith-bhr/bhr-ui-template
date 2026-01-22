@@ -37,7 +37,7 @@ export function Dropdown({ label, options, value, onChange, className = '' }: Dr
   };
 
   return (
-    <div className={`relative ${className}`} ref={dropdownRef}>
+    <div className={`relative inline-flex items-center ${className}`} ref={dropdownRef}>
       {label && (
         <label className="mr-3 text-[15px] font-medium text-[var(--text-neutral-strong)]">
           {label}
@@ -48,7 +48,7 @@ export function Dropdown({ label, options, value, onChange, className = '' }: Dr
         onClick={() => setIsOpen(!isOpen)}
         className="
           inline-flex items-center justify-between gap-2
-          min-w-[200px] h-10
+          w-full h-10
           px-4 py-2
           bg-[var(--surface-neutral-white)]
           border border-[var(--border-neutral-medium)]
@@ -81,7 +81,7 @@ export function Dropdown({ label, options, value, onChange, className = '' }: Dr
         <div
           className="
             absolute z-50 mt-2
-            min-w-[200px]
+            w-full min-w-max
             bg-[var(--surface-neutral-white)]
             border border-[var(--border-neutral-medium)]
             rounded-[var(--radius-small)]
