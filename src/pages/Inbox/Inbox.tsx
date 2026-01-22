@@ -66,14 +66,14 @@ export function Inbox() {
       }}
     >
       {/* Page Header */}
-      <div className="px-10 py-8">
+      <div className="px-8 pt-8 pb-6">
         <h1
           style={{
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontSize: '40px',
+            fontFamily: "'Fields', system-ui, sans-serif",
+            fontSize: '48px',
             fontWeight: 700,
-            lineHeight: '48px',
-            color: 'var(--text-neutral-xx-strong)',
+            lineHeight: '58px',
+            color: 'var(--color-primary-strong)',
             margin: 0,
           }}
         >
