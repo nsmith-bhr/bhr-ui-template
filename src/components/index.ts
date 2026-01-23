@@ -22,3 +22,4 @@ export { EmployeeTableRow } from './EmployeeTableRow';
 export { PeopleListView } from './PeopleListView';
 export { FeedbackCard } from './FeedbackCard';
 export { PendingFeedbackCard } from './PendingFeedbackCard';
+export { GoalCard } from './GoalCard';

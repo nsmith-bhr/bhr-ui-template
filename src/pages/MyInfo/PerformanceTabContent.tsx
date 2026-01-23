@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Icon, Tabs, Dropdown } from '../../components';
 import { FeedbackTabContent } from './FeedbackTabContent';
+import { GoalsTabContent } from './GoalsTabContent';
 
 interface PerformanceTabContentProps {
   employeeName: string;
@@ -8,16 +9,16 @@ interface PerformanceTabContentProps {
 
 export function PerformanceTabContent({ employeeName }: PerformanceTabContentProps) {
   // State for sub-tabs (Goals, Feedback, Assessments)
-  const [activeSubTab, setActiveSubTab] = useState<'goals' | 'feedback' | 'assessments'>('feedback');
+  const [activeSubTab, setActiveSubTab] = useState<'goals' | 'feedback' | 'assessments'>('goals');
 
   // State for time period filter
   const [timePeriod, setTimePeriod] = useState('last-6-months');
 
   // Sub-tab configuration
   const subTabs = [
-    { id: 'goals', label: 'Goals' },
-    { id: 'feedback', label: 'Feedback' },
-    { id: 'assessments', label: 'Assessments' },
+    { id: 'goals', label: 'Goals', icon: 'bullseye' },
+    { id: 'feedback', label: 'Feedback', icon: 'bullhorn' },
+    { id: 'assessments', label: 'Assessments', icon: 'clipboard' },
   ];
 
   // Time period options
@@ -51,15 +52,17 @@ export function PerformanceTabContent({ employeeName }: PerformanceTabContentPro
           variant="default"
         />
 
-        {/* Time Period Dropdown */}
-        <div className="mt-4">
-          <Dropdown
-            options={timePeriodOptions}
-            value={timePeriod}
-            onChange={setTimePeriod}
-            className="w-[212px] [&>button]:h-8"
-          />
-        </div>
+        {/* Time Period Dropdown - Only show for Feedback and Assessments */}
+        {(activeSubTab === 'feedback' || activeSubTab === 'assessments') && (
+          <div className="mt-4">
+            <Dropdown
+              options={timePeriodOptions}
+              value={timePeriod}
+              onChange={setTimePeriod}
+              className="w-[212px] [&>button]:h-8"
+            />
+          </div>
+        )}
 
         {/* Divider */}
         <div className="w-full h-px bg-[var(--border-neutral-x-weak)] my-4" />
@@ -70,9 +73,7 @@ export function PerformanceTabContent({ employeeName }: PerformanceTabContentPro
             <FeedbackTabContent employeeName={employeeName} />
           )}
           {activeSubTab === 'goals' && (
-            <div className="text-[15px] text-[var(--text-neutral-medium)]">
-              Goals coming soon
-            </div>
+            <GoalsTabContent employeeName={employeeName} />
           )}
           {activeSubTab === 'assessments' && (
             <div className="text-[15px] text-[var(--text-neutral-medium)]">

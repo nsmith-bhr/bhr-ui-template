@@ -64,6 +64,10 @@ import {
   faPaperPlane,
   faEyeSlash,
   faUsers,
+  faCirclePlus,
+  faBullseye,
+  faBullhorn,
+  faClipboard,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -162,7 +166,11 @@ export type IconName =
   | 'circle-arrow-up'
   | 'paper-plane'
   | 'eye-slash'
-  | 'users';
+  | 'users'
+  | 'circle-plus'
+  | 'bullseye'
+  | 'bullhorn'
+  | 'clipboard';
 
 interface IconProps {
   name: IconName;
@@ -242,6 +250,10 @@ const faIconMap = {
   'paper-plane': faPaperPlane,
   'eye-slash': faEyeSlash,
   'users': faUsers,
+  'circle-plus': faCirclePlus,
+  'bullseye': faBullseye,
+  'bullhorn': faBullhorn,
+  'clipboard': faClipboard,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {
