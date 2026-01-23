@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Icon, Dropdown } from '../../components';
 import { jobOpenings } from '../../data/jobOpenings';
 import { CandidatesTabContent } from './CandidatesTabContent';
@@ -145,13 +146,12 @@ export function Hiring() {
                   </div>
                 </td>
                 <td className="px-4 py-4">
-                  <a
-                    href="#"
+                  <Link
+                    to={`/hiring/job/${job.id}`}
                     className="block text-[15px] font-medium text-[#2563eb] hover:underline"
-                    onClick={(e) => e.preventDefault()}
                   >
                     {job.title}
-                  </a>
+                  </Link>
                   <span className="text-[14px] text-[var(--text-neutral-medium)]">{job.location}</span>
                 </td>
                 <td className="px-4 py-4">
