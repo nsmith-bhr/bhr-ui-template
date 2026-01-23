@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Icon, Dropdown } from '../../components';
 import { jobOpenings } from '../../data/jobOpenings';
 import { CandidatesTabContent } from './CandidatesTabContent';
+import { TalentPoolsTabContent } from './TalentPoolsTabContent';
 
 export function Hiring() {
   const [activeTab, setActiveTab] = useState<'openings' | 'candidates' | 'pools'>('openings');
@@ -170,12 +171,8 @@ export function Hiring() {
       </div>
       )}
 
-      {/* Talent Pools Tab - Coming Soon */}
-      {activeTab === 'pools' && (
-        <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] border border-[var(--border-neutral-x-weak)] p-10 text-center">
-          <p className="text-[var(--text-neutral-medium)]">Talent Pools - Coming Soon</p>
-        </div>
-      )}
+      {/* Talent Pools Tab */}
+      {activeTab === 'pools' && <TalentPoolsTabContent />}
     </div>
   );
 }

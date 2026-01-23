@@ -73,6 +73,8 @@ import {
   faTemperatureHalf,
   faStar,
   faCircleXmark,
+  faPiggyBank,
+  faComputer,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -180,7 +182,10 @@ export type IconName =
   | 'eye'
   | 'temperature-half'
   | 'star'
-  | 'circle-x';
+  | 'circle-x'
+  | 'piggy-bank'
+  | 'computer'
+  | 'megaphone';
 
 interface IconProps {
   name: IconName;
@@ -269,6 +274,9 @@ const faIconMap = {
   'temperature-half': faTemperatureHalf,
   'star': faStar,
   'circle-x': faCircleXmark,
+  'piggy-bank': faPiggyBank,
+  'computer': faComputer,
+  'megaphone': faBullhorn,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {
