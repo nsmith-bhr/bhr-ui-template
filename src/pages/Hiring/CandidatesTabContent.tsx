@@ -36,34 +36,34 @@ export function CandidatesTabContent() {
   };
 
   return (
-    <div className="flex gap-6">
-      {/* Left Sidebar - Filters */}
-      <div className="w-[264px] flex-shrink-0">
-        {/* Search Input */}
-        <div className="mb-3">
-          <div className="relative">
-            <Icon
-              name="magnifying-glass"
-              size={16}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-neutral-medium)]"
-            />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by keywords, name, location, etc."
-              className="w-full h-10 pl-11 pr-4 text-[15px] border border-[var(--border-neutral-medium)] rounded-full bg-white focus:outline-none focus:border-[var(--color-primary-strong)]"
-            />
-          </div>
-        </div>
+    <div className="flex flex-col gap-6">
+      {/* Search Input - Full Width */}
+      <div className="relative">
+        <Icon
+          name="magnifying-glass"
+          size={20}
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--text-neutral-strong)]"
+        />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by keywords, name, location, etc."
+          className="w-full h-[48px] pl-[52px] pr-5 text-[16px] leading-[24px] border border-[var(--border-neutral-medium)] rounded-full bg-[var(--surface-neutral-white)] placeholder:text-[var(--text-neutral-weak)] focus:outline-none focus:border-[var(--color-primary-strong)]"
+        />
+      </div>
 
-        {/* Status Filter Dropdown */}
-        <div className="mb-3">
+      {/* Main Content Area - Filters + Table */}
+      <div className="flex gap-6">
+        {/* Left Sidebar - Filters */}
+        <div className="w-[264px] flex-shrink-0">
+          {/* Status Filter Dropdown */}
+          <div className="mb-3">
           <div className="relative">
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full h-10 px-4 pr-10 text-[15px] border border-[var(--border-neutral-medium)] rounded-full bg-white appearance-none focus:outline-none focus:border-[var(--color-primary-strong)] cursor-pointer"
+              className="w-full h-10 px-4 pr-10 text-[15px] border border-[var(--border-neutral-medium)] rounded-full bg-[var(--surface-neutral-white)] appearance-none focus:outline-none focus:border-[var(--color-primary-strong)] cursor-pointer"
             >
               {statusOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -132,11 +132,11 @@ export function CandidatesTabContent() {
             </div>
           ))}
         </div>
-      </div>
+        </div>
 
-      {/* Main Content - Candidates Table */}
-      <div className="flex-1">
-        <div className="bg-white rounded-[var(--radius-small)] shadow-[2px_2px_0px_2px_rgba(56,49,47,0.05)] overflow-hidden">
+        {/* Main Content - Candidates Table */}
+        <div className="flex-1">
+        <div className="bg-[var(--surface-neutral-white)] rounded-[var(--radius-small)] shadow-[2px_2px_0px_2px_rgba(56,49,47,0.05)] overflow-hidden">
           {/* Header */}
           <div className="px-8 py-5 border-b border-[var(--border-neutral-x-weak)]">
             <h2
@@ -241,6 +241,7 @@ export function CandidatesTabContent() {
               </tbody>
             </table>
           </div>
+        </div>
         </div>
       </div>
     </div>
