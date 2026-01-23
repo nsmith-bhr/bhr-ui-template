@@ -63,7 +63,7 @@ export function PerformanceTabContent({ employeeName }: PerformanceTabContentPro
       <div className="w-full h-px bg-[var(--border-neutral-x-weak)] my-4" />
 
       {/* Sub-tab Content */}
-      <div className="mt-6">
+      <div className="mt-4">
         {activeSubTab === 'feedback' && (
           <FeedbackTabContent employeeName={employeeName} />
         )}

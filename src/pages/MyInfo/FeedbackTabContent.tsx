@@ -13,31 +13,31 @@ export function FeedbackTabContent({ employeeName }: FeedbackTabContentProps) {
   return (
     <div className="flex flex-col">
       {/* Helper Text (Info Message) */}
-      <div className="flex items-start gap-3">
-        <Icon name="circle-info" size={16} className="text-[var(--icon-neutral-strong)] mt-0.5" />
-        <span className="text-[15px] leading-[20px] text-[var(--text-neutral-medium)]">
-          Just so you know: feedback is hidden from {employeeName}
+      <div className="flex items-start gap-2">
+        <Icon name="eye-slash" size={16} className="text-[#777270] mt-0.5" />
+        <span className="text-[14px] leading-[20px] text-[#676260]">
+          Just so you know, feedback is hidden from {employeeName}.
         </span>
       </div>
 
       {/* Request Feedback Section */}
       <div className="mt-4">
         {/* Section Header with Icon and Tooltip */}
-        <div className="flex items-center gap-3">
-          <Icon name="sparkles" size={20} className="text-[var(--color-primary-strong)]" />
-          <span className="text-[15px] leading-[24px] font-medium text-[var(--text-neutral-strong)]">
+        <div className="flex items-center gap-2">
+          <Icon name="users" size={20} className="text-[#48413f]" />
+          <span className="text-[16px] leading-[24px] font-medium text-[#48413f]">
             Request feedback about {employeeName}
           </span>
-          <Icon name="circle-question" size={16} className="text-[var(--icon-neutral-strong)]" />
+          <Icon name="circle-question" size={16} className="text-[#868180]" />
         </div>
 
         {/* Instruction Text */}
-        <p className="text-[15px] leading-[20px] text-[var(--text-neutral-medium)] mt-3">
+        <p className="text-[14px] leading-[20px] text-[#676260] mt-2">
           Select some employees who work with {employeeName}
         </p>
 
         {/* Feedback Request Form */}
-        <div className="flex items-center gap-[10px] mt-3">
+        <div className="flex items-center gap-2 mt-2">
           <TextInput
             value={searchValue}
             onChange={setSearchValue}
@@ -45,7 +45,7 @@ export function FeedbackTabContent({ employeeName }: FeedbackTabContentProps) {
             className="w-[395px]"
             inputClassName="h-8"
           />
-          <Button variant="standard" size="small" className="w-[112px]">
+          <Button variant="standard" size="small">
             Send Request
           </Button>
         </div>
@@ -57,16 +57,16 @@ export function FeedbackTabContent({ employeeName }: FeedbackTabContentProps) {
       {/* Feedback Summary Section */}
       <div>
         {/* Section Header with Icon and Tooltip */}
-        <div className="flex items-center gap-3">
-          <Icon name="sparkles" size={20} className="text-[var(--color-primary-strong)]" />
-          <span className="text-[15px] leading-[24px] font-medium text-[var(--text-neutral-strong)]">
+        <div className="flex items-center gap-2">
+          <Icon name="sparkles" size={20} className="text-[#48413f]" />
+          <span className="text-[16px] leading-[24px] font-medium text-[#48413f]">
             Summary of feedback about {employeeName}
           </span>
-          <Icon name="circle-question" size={16} className="text-[var(--icon-neutral-strong)]" />
+          <Icon name="circle-question" size={16} className="text-[#868180]" />
         </div>
 
         {/* Summary Text */}
-        <p className="text-[15px] leading-[20px] text-[var(--text-neutral-medium)] mt-3 pl-8">
+        <p className="text-[16px] leading-[24px] text-[#38312f] mt-2 pl-7">
           {summaryText}
         </p>
       </div>
