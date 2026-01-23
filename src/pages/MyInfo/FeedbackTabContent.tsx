@@ -42,8 +42,8 @@ export function FeedbackTabContent({ employeeName }: FeedbackTabContentProps) {
             value={searchValue}
             onChange={setSearchValue}
             placeholder="Search names"
+            size="small"
             className="w-[395px]"
-            inputClassName="h-8"
           />
           <Button variant="standard" size="small">
             Send Request
