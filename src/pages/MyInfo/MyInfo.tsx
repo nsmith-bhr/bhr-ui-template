@@ -303,7 +303,7 @@ export function MyInfo() {
         className="relative px-8 pt-4 pb-0 bg-[var(--color-primary-strong)] rounded-[var(--radius-large)]"
       >
         {/* Header Contents */}
-        <div className="relative flex flex-col gap-[50px] pt-[34px] z-0">
+        <div className="relative flex flex-col gap-[50px] pt-[34px]">
           {/* Top Row: Name/Title and Action Buttons */}
           <div className="flex items-start justify-between pl-[256px]">
             {/* Name and Title */}
