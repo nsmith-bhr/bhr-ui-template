@@ -264,7 +264,13 @@ export function MyInfo() {
                           className="fixed inset-0 z-40"
                           onClick={() => setShowFloatingMoreDropdown(false)}
                         />
-                        <div className="absolute top-full right-0 mt-1 bg-white dark:bg-neutral-800 rounded-[var(--radius-small)] shadow-lg border border-gray-200 dark:border-neutral-600 py-1 z-[9999] min-w-[160px] max-h-[400px] overflow-y-auto flex flex-col">
+                        <div
+                          className="absolute top-full right-0 mt-1 rounded-[var(--radius-small)] shadow-lg py-1 z-[9999] min-w-[160px] max-h-[400px] overflow-y-auto flex flex-col"
+                          style={{
+                            backgroundColor: 'var(--surface-neutral-white)',
+                            border: '1px solid var(--border-neutral-weak)'
+                          }}
+                        >
                           {profileTabs.slice(floatingVisibleTabCount).map((tab) => {
                             const isActive = tab.id === activeTab;
                             return (
@@ -274,13 +280,22 @@ export function MyInfo() {
                                   setActiveTab(tab.id);
                                   setShowFloatingMoreDropdown(false);
                                 }}
-                                className={`
-                                  w-full text-left px-4 py-2 text-[15px] transition-colors
-                                  ${isActive
-                                    ? 'bg-gray-100 dark:bg-neutral-700 text-[var(--color-primary-strong)] dark:text-white font-bold'
-                                    : 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-700'
+                                className="w-full text-left px-4 py-2 text-[15px] transition-colors"
+                                style={{
+                                  backgroundColor: isActive ? 'var(--surface-neutral-xx-weak)' : 'transparent',
+                                  color: isActive ? 'var(--color-primary-strong)' : 'var(--text-neutral-strong)',
+                                  fontWeight: isActive ? 'bold' : 'normal'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (!isActive) {
+                                    e.currentTarget.style.backgroundColor = 'var(--surface-neutral-xx-weak)';
                                   }
-                                `}
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (!isActive) {
+                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                  }
+                                }}
                               >
                                 {tab.label}
                               </button>
@@ -379,7 +394,13 @@ export function MyInfo() {
 
                 {/* Dropdown menu */}
                 {showMoreDropdown && visibleTabCount < profileTabs.length && (
-                  <div className="absolute top-full left-0 mt-1 bg-white dark:bg-neutral-800 rounded-[var(--radius-small)] shadow-lg border border-gray-200 dark:border-neutral-600 py-1 z-[9999] min-w-[160px] max-h-[400px] overflow-y-auto flex flex-col">
+                  <div
+                    className="absolute top-full left-0 mt-1 rounded-[var(--radius-small)] shadow-lg py-1 z-[9999] min-w-[160px] max-h-[400px] overflow-y-auto flex flex-col"
+                    style={{
+                      backgroundColor: 'var(--surface-neutral-white)',
+                      border: '1px solid var(--border-neutral-weak)'
+                    }}
+                  >
                     {profileTabs.slice(visibleTabCount).map((tab) => {
                       const isActive = tab.id === activeTab;
                       return (
@@ -389,13 +410,22 @@ export function MyInfo() {
                             setActiveTab(tab.id);
                             setShowMoreDropdown(false);
                           }}
-                          className={`
-                            w-full text-left px-4 py-2 text-[15px] transition-colors
-                            ${isActive
-                              ? 'bg-gray-100 dark:bg-neutral-700 text-[var(--color-primary-strong)] dark:text-white font-bold'
-                              : 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-700'
+                          className="w-full text-left px-4 py-2 text-[15px] transition-colors"
+                          style={{
+                            backgroundColor: isActive ? 'var(--surface-neutral-xx-weak)' : 'transparent',
+                            color: isActive ? 'var(--color-primary-strong)' : 'var(--text-neutral-strong)',
+                            fontWeight: isActive ? 'bold' : 'normal'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isActive) {
+                              e.currentTarget.style.backgroundColor = 'var(--surface-neutral-xx-weak)';
                             }
-                          `}
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isActive) {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                            }
+                          }}
                         >
                           {tab.label}
                         </button>
