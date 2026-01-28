@@ -28,3 +28,5 @@ export { AssessmentBlock } from './AssessmentBlock';
 export { StarRating } from './StarRating';
 export { TalentPoolCard } from './TalentPoolCard';
 export { Checkbox } from './Checkbox';
+export { Card } from './Card';
+export { OrgChartView } from './OrgChart';

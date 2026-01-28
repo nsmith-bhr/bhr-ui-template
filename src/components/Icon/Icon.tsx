@@ -104,9 +104,12 @@ import {
   CircleDollarSign,
   Sun,
   Moon,
+  ZoomIn,
+  ZoomOut,
   Grid2x2Plus,
   Inbox,
   Settings,
+  CirclePlus,
 } from 'lucide-react';
 
 export type IconName =
@@ -175,6 +178,9 @@ export type IconName =
   | 'circle-dollar-lucide'
   | 'sun'
   | 'moon'
+  | 'zoom-in'
+  | 'zoom-out'
+  | 'file-export'
   | 'sparkles'
   | 'paperclip'
   | 'microphone'
@@ -187,6 +193,7 @@ export type IconName =
   | 'eye-slash'
   | 'users'
   | 'circle-plus'
+  | 'circle-plus-lined'
   | 'bullseye'
   | 'bullhorn'
   | 'clipboard'
@@ -364,8 +371,25 @@ export function Icon({ name, size = 24, className = '', variant = 'solid', style
     return <Moon size={size} className={className} strokeWidth={2.25} />;
   }
 
+  if (name === 'zoom-in') {
+    return <ZoomIn size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'zoom-out') {
+    return <ZoomOut size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'file-export') {
+    // Use arrow-up-from-bracket as export icon
+    return <FontAwesomeIcon icon={faArrowUpFromBracket} fontSize={size} className={className} />;
+  }
+
   if (name === 'grid-2-plus') {
     return <Grid2x2Plus size={size} className={className} strokeWidth={2.5} style={style} />;
+  }
+
+  if (name === 'circle-plus-lined') {
+    return <CirclePlus size={size} className={className} strokeWidth={1.5} style={style} />;
   }
 
   // Handle icons that need Lucide for regular variant
