@@ -121,11 +121,10 @@ export function OrgChartControls({
                      bg-white dark:bg-neutral-800
                      border border-gray-300 dark:border-neutral-600
                      focus:outline-none focus:ring-2 focus:ring-blue-500
-                     placeholder:text-[#777270]"
+                     placeholder:text-[#777270] text-gray-900 dark:text-neutral-100"
             style={{
               fontSize: '15px',
               lineHeight: '22px',
-              color: '#48413f',
               padding: '8px 16px 8px 44px'
             }}
           />
