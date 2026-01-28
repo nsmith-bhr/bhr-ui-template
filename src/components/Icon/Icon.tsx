@@ -104,6 +104,8 @@ import {
   CircleDollarSign,
   Sun,
   Moon,
+  ZoomIn,
+  ZoomOut,
   Grid2x2Plus,
   Inbox,
   Settings,
@@ -176,6 +178,9 @@ export type IconName =
   | 'circle-dollar-lucide'
   | 'sun'
   | 'moon'
+  | 'zoom-in'
+  | 'zoom-out'
+  | 'file-export'
   | 'sparkles'
   | 'paperclip'
   | 'microphone'
@@ -364,6 +369,19 @@ export function Icon({ name, size = 24, className = '', variant = 'solid', style
 
   if (name === 'moon') {
     return <Moon size={size} className={className} strokeWidth={2.25} />;
+  }
+
+  if (name === 'zoom-in') {
+    return <ZoomIn size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'zoom-out') {
+    return <ZoomOut size={size} className={className} strokeWidth={1.5} />;
+  }
+
+  if (name === 'file-export') {
+    // Use arrow-up-from-bracket as export icon
+    return <FontAwesomeIcon icon={faArrowUpFromBracket} fontSize={size} className={className} />;
   }
 
   if (name === 'grid-2-plus') {
