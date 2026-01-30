@@ -22,7 +22,6 @@ export function InfoBanner({
         bg-[var(--surface-neutral-white)]
         border border-[var(--border-neutral-x-weak)]
         rounded-[var(--radius-small)]
-        overflow-hidden
         px-8 py-5
       "
       style={{ boxShadow: '2px 2px 0px 2px rgba(56, 49, 47, 0.05)' }}
