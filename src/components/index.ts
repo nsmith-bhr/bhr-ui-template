@@ -7,6 +7,7 @@ export { TextHeadline } from './TextHeadline';
 export { Gridlet } from './Gridlet';
 export { EmployeeCard } from './EmployeeCard';
 export { Dropdown } from './Dropdown';
+export { FormDropdown } from './FormDropdown';
 export { TextArea } from './TextArea';
 export { TextInput } from './TextInput';
 export { Tabs } from './Tabs';

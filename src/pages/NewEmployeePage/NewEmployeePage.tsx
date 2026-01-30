@@ -4,9 +4,171 @@ import {
   FormSectionHeader,
   InfoBanner,
   TextInput,
-  Dropdown,
+  FormDropdown,
   Checkbox,
 } from '../../components';
+
+// Dropdown options
+const genderOptions = [
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+  { value: 'non-binary', label: 'Non-Binary' },
+  { value: 'prefer-not-to-say', label: 'Prefer Not to Say' },
+];
+
+const maritalStatusOptions = [
+  { value: 'single', label: 'Single' },
+  { value: 'married', label: 'Married' },
+  { value: 'divorced', label: 'Divorced' },
+  { value: 'widowed', label: 'Widowed' },
+];
+
+const stateOptions = [
+  { value: 'AL', label: 'Alabama' },
+  { value: 'AK', label: 'Alaska' },
+  { value: 'AZ', label: 'Arizona' },
+  { value: 'AR', label: 'Arkansas' },
+  { value: 'CA', label: 'California' },
+  { value: 'CO', label: 'Colorado' },
+  { value: 'CT', label: 'Connecticut' },
+  { value: 'DE', label: 'Delaware' },
+  { value: 'FL', label: 'Florida' },
+  { value: 'GA', label: 'Georgia' },
+  { value: 'HI', label: 'Hawaii' },
+  { value: 'ID', label: 'Idaho' },
+  { value: 'IL', label: 'Illinois' },
+  { value: 'IN', label: 'Indiana' },
+  { value: 'IA', label: 'Iowa' },
+  { value: 'KS', label: 'Kansas' },
+  { value: 'KY', label: 'Kentucky' },
+  { value: 'LA', label: 'Louisiana' },
+  { value: 'ME', label: 'Maine' },
+  { value: 'MD', label: 'Maryland' },
+  { value: 'MA', label: 'Massachusetts' },
+  { value: 'MI', label: 'Michigan' },
+  { value: 'MN', label: 'Minnesota' },
+  { value: 'MS', label: 'Mississippi' },
+  { value: 'MO', label: 'Missouri' },
+  { value: 'MT', label: 'Montana' },
+  { value: 'NE', label: 'Nebraska' },
+  { value: 'NV', label: 'Nevada' },
+  { value: 'NH', label: 'New Hampshire' },
+  { value: 'NJ', label: 'New Jersey' },
+  { value: 'NM', label: 'New Mexico' },
+  { value: 'NY', label: 'New York' },
+  { value: 'NC', label: 'North Carolina' },
+  { value: 'ND', label: 'North Dakota' },
+  { value: 'OH', label: 'Ohio' },
+  { value: 'OK', label: 'Oklahoma' },
+  { value: 'OR', label: 'Oregon' },
+  { value: 'PA', label: 'Pennsylvania' },
+  { value: 'RI', label: 'Rhode Island' },
+  { value: 'SC', label: 'South Carolina' },
+  { value: 'SD', label: 'South Dakota' },
+  { value: 'TN', label: 'Tennessee' },
+  { value: 'TX', label: 'Texas' },
+  { value: 'UT', label: 'Utah' },
+  { value: 'VT', label: 'Vermont' },
+  { value: 'VA', label: 'Virginia' },
+  { value: 'WA', label: 'Washington' },
+  { value: 'WV', label: 'West Virginia' },
+  { value: 'WI', label: 'Wisconsin' },
+  { value: 'WY', label: 'Wyoming' },
+];
+
+const payScheduleOptions = [
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'bi-weekly', label: 'Bi-Weekly' },
+  { value: 'semi-monthly', label: 'Semi-Monthly' },
+  { value: 'monthly', label: 'Monthly' },
+];
+
+const payTypeOptions = [
+  { value: 'hourly', label: 'Hourly' },
+  { value: 'salary', label: 'Salary' },
+];
+
+const payRateTypeOptions = [
+  { value: 'hourly', label: 'Hourly' },
+  { value: 'daily', label: 'Daily' },
+  { value: 'annual', label: 'Annual' },
+];
+
+const payPeriodOptions = [
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'bi-weekly', label: 'Bi-Weekly' },
+  { value: 'monthly', label: 'Monthly' },
+];
+
+const employmentStatusOptions = [
+  { value: 'full-time', label: 'Full-Time' },
+  { value: 'part-time', label: 'Part-Time' },
+  { value: 'contract', label: 'Contract' },
+  { value: 'temporary', label: 'Temporary' },
+  { value: 'intern', label: 'Intern' },
+];
+
+const jobTitleOptions = [
+  { value: 'software-engineer', label: 'Software Engineer' },
+  { value: 'senior-software-engineer', label: 'Senior Software Engineer' },
+  { value: 'product-manager', label: 'Product Manager' },
+  { value: 'designer', label: 'Designer' },
+  { value: 'data-analyst', label: 'Data Analyst' },
+  { value: 'hr-manager', label: 'HR Manager' },
+  { value: 'accountant', label: 'Accountant' },
+];
+
+const reportsToOptions = [
+  { value: 'john-doe', label: 'John Doe' },
+  { value: 'jane-smith', label: 'Jane Smith' },
+  { value: 'bob-johnson', label: 'Bob Johnson' },
+];
+
+const departmentOptions = [
+  { value: 'engineering', label: 'Engineering' },
+  { value: 'product', label: 'Product' },
+  { value: 'design', label: 'Design' },
+  { value: 'marketing', label: 'Marketing' },
+  { value: 'sales', label: 'Sales' },
+  { value: 'hr', label: 'Human Resources' },
+  { value: 'finance', label: 'Finance' },
+];
+
+const divisionOptions = [
+  { value: 'technology', label: 'Technology' },
+  { value: 'operations', label: 'Operations' },
+  { value: 'corporate', label: 'Corporate' },
+];
+
+const locationOptions = [
+  { value: 'ny-office', label: 'New York Office' },
+  { value: 'sf-office', label: 'San Francisco Office' },
+  { value: 'austin-office', label: 'Austin Office' },
+  { value: 'remote', label: 'Remote' },
+];
+
+const relationshipOptions = [
+  { value: 'spouse', label: 'Spouse' },
+  { value: 'child', label: 'Child' },
+  { value: 'parent', label: 'Parent' },
+  { value: 'sibling', label: 'Sibling' },
+  { value: 'friend', label: 'Friend' },
+  { value: 'other', label: 'Other' },
+];
+
+const countryOptions = [
+  { value: 'US', label: 'United States' },
+  { value: 'CA', label: 'Canada' },
+  { value: 'MX', label: 'Mexico' },
+];
+
+const degreeOptions = [
+  { value: 'high-school', label: 'High School' },
+  { value: 'associates', label: 'Associate\'s Degree' },
+  { value: 'bachelors', label: 'Bachelor\'s Degree' },
+  { value: 'masters', label: 'Master\'s Degree' },
+  { value: 'doctorate', label: 'Doctorate' },
+];
 
 export default function NewEmployeePage() {
   const [sendPacket, setSendPacket] = useState(false);
@@ -184,20 +346,20 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Gender"
+                  options={genderOptions}
                   value={formData.gender}
                   onChange={(value) => handleInputChange('gender', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Marital Status"
+                  options={maritalStatusOptions}
                   value={formData.maritalStatus}
                   onChange={(value) => handleInputChange('maritalStatus', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -248,11 +410,11 @@ export default function NewEmployeePage() {
                 />
               </div>
               <div className="w-[180px]">
-                <TextInput
+                <FormDropdown
                   label="State"
+                  options={stateOptions}
                   value={formData.state}
                   onChange={(value) => handleInputChange('state', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -273,22 +435,22 @@ export default function NewEmployeePage() {
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Pay Schedule"
+                  options={payScheduleOptions}
                   value={formData.paySchedule}
                   onChange={(value) => handleInputChange('paySchedule', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Pay Type"
+                  options={payTypeOptions}
                   value={formData.payType}
                   onChange={(value) => handleInputChange('payType', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -305,20 +467,20 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Pay Rate Type"
+                  options={payRateTypeOptions}
                   value={formData.payRateType}
                   onChange={(value) => handleInputChange('payRateType', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Pay Period"
+                  options={payPeriodOptions}
                   value={formData.payPeriod}
                   onChange={(value) => handleInputChange('payPeriod', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -413,11 +575,11 @@ export default function NewEmployeePage() {
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Employment Status"
+                  options={employmentStatusOptions}
                   value={formData.employmentStatus}
                   onChange={(value) => handleInputChange('employmentStatus', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -430,51 +592,51 @@ export default function NewEmployeePage() {
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Job Title"
+                  options={jobTitleOptions}
                   value={formData.jobTitle}
                   onChange={(value) => handleInputChange('jobTitle', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Reports To"
+                  options={reportsToOptions}
                   value={formData.reportsTo}
                   onChange={(value) => handleInputChange('reportsTo', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Department"
+                  options={departmentOptions}
                   value={formData.department}
                   onChange={(value) => handleInputChange('department', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Division"
+                  options={divisionOptions}
                   value={formData.division}
                   onChange={(value) => handleInputChange('division', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Location"
+                  options={locationOptions}
                   value={formData.location}
                   onChange={(value) => handleInputChange('location', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -533,20 +695,20 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Gender"
+                  options={genderOptions}
                   value={formData.dependentGender}
                   onChange={(value) => handleInputChange('dependentGender', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Relationship"
+                  options={relationshipOptions}
                   value={formData.dependentRelationship}
                   onChange={(value) => handleInputChange('dependentRelationship', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -572,11 +734,11 @@ export default function NewEmployeePage() {
                 />
               </div>
               <div className="w-[248px]">
-                <TextInput
+                <FormDropdown
                   label="Relationship"
+                  options={relationshipOptions}
                   value={formData.emergencyRelationship}
                   onChange={(value) => handleInputChange('emergencyRelationship', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -641,11 +803,11 @@ export default function NewEmployeePage() {
                 />
               </div>
               <div className="w-[180px]">
-                <TextInput
+                <FormDropdown
                   label="State"
+                  options={stateOptions}
                   value={formData.emergencyState}
                   onChange={(value) => handleInputChange('emergencyState', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -660,11 +822,11 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[180px]">
-                <TextInput
+                <FormDropdown
                   label="Country"
+                  options={countryOptions}
                   value={formData.emergencyCountry}
                   onChange={(value) => handleInputChange('emergencyCountry', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
@@ -692,11 +854,11 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[180px]">
-                <TextInput
+                <FormDropdown
                   label="Degree"
+                  options={degreeOptions}
                   value={formData.degree}
                   onChange={(value) => handleInputChange('degree', value)}
-                  type="dropdown"
                   placeholder="-Select-"
                 />
               </div>
