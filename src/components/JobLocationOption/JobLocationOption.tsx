@@ -13,7 +13,7 @@ export function JobLocationOption({ icon, label, checked, onChange }: JobLocatio
       type="button"
       onClick={() => onChange(!checked)}
       className={`
-        flex items-center gap-4 p-5 w-[223px]
+        flex items-center gap-4 p-5 flex-1 min-w-[200px] max-w-[223px]
         bg-[var(--surface-neutral-white)]
         border rounded-[var(--radius-small)]
         transition-all

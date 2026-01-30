@@ -4,6 +4,11 @@ import { JobLocationOption } from '../JobLocationOption';
 
 export function JobInformationForm() {
   const [postingTitle, setPostingTitle] = useState('');
+  const [jobStatus, setJobStatus] = useState('Draft');
+  const [hiringLead, setHiringLead] = useState('');
+  const [department, setDepartment] = useState('');
+  const [employmentType, setEmploymentType] = useState('');
+  const [minimumExperience, setMinimumExperience] = useState('');
   const [compensation, setCompensation] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [internalJobCode, setInternalJobCode] = useState('');
@@ -11,6 +16,12 @@ export function JobInformationForm() {
   const [locationInOffice, setLocationInOffice] = useState(false);
   const [locationHybrid, setLocationHybrid] = useState(false);
   const [locationRemote, setLocationRemote] = useState(false);
+
+  const jobStatuses = ['Draft', 'Open', 'On Hold', 'Closed'];
+  const hiringLeads = ['Sarah Johnson', 'Michael Chen', 'Emily Rodriguez', 'David Kim', 'Jessica Martinez'];
+  const departments = ['Engineering', 'Product', 'Design', 'Marketing', 'Sales', 'Customer Success', 'Operations', 'Finance', 'Human Resources'];
+  const employmentTypes = ['Full-Time', 'Part-Time', 'Contract', 'Temporary', 'Internship'];
+  const experienceLevels = ['Entry Level (0-2 years)', 'Mid Level (3-5 years)', 'Senior Level (6-10 years)', 'Lead/Principal (10+ years)', 'Executive'];
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -33,22 +44,26 @@ export function JobInformationForm() {
       </div>
 
       {/* Job Status */}
-      <div className="flex flex-col gap-1 w-[720px]">
+      <div className="flex flex-col gap-1 w-full max-w-[720px]">
         <label className="text-[14px] font-medium leading-[20px] text-[var(--text-neutral-x-strong)]">
           Job Status<span className="text-[var(--text-neutral-strong)]">*</span>
         </label>
         <div className="flex items-center gap-2">
           <div
-            className="flex items-center flex-1 h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+            className="relative flex items-center flex-1 h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
-            <div className="flex-1 flex items-center">
-              <span className="text-[15px] leading-[22px] text-[var(--text-neutral-strong)]">
-                Draft
-              </span>
-            </div>
-            <div className="flex items-center gap-2 h-full shrink-0">
-              <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
+            <select
+              value={jobStatus}
+              onChange={(e) => setJobStatus(e.target.value)}
+              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+            >
+              {jobStatuses.map((status) => (
+                <option key={status} value={status}>{status}</option>
+              ))}
+            </select>
+            <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-full">
+              <div className="w-px h-6 bg-[var(--border-neutral-medium)]" />
               <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
             </div>
           </div>
@@ -69,13 +84,20 @@ export function JobInformationForm() {
             Hiring Lead<span className="text-[var(--text-neutral-strong)]">*</span>
           </label>
           <div
-            className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+            className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
-            <span className="flex-1 text-[15px] leading-[22px] text-[var(--text-neutral-strong)]">
-              -Select-
-            </span>
-            <div className="flex items-center gap-2 h-full shrink-0">
+            <select
+              value={hiringLead}
+              onChange={(e) => setHiringLead(e.target.value)}
+              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+            >
+              <option value="">-Select-</option>
+              {hiringLeads.map((lead) => (
+                <option key={lead} value={lead}>{lead}</option>
+              ))}
+            </select>
+            <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
               <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
               <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
             </div>
@@ -87,13 +109,20 @@ export function JobInformationForm() {
             Department
           </label>
           <div
-            className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+            className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
-            <span className="flex-1 text-[15px] leading-[22px] text-[var(--text-neutral-strong)]">
-              -Select-
-            </span>
-            <div className="flex items-center gap-2 h-full shrink-0">
+            <select
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+            >
+              <option value="">-Select-</option>
+              {departments.map((dept) => (
+                <option key={dept} value={dept}>{dept}</option>
+              ))}
+            </select>
+            <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
               <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
               <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
             </div>
@@ -107,13 +136,20 @@ export function JobInformationForm() {
           Employment Type<span className="text-[var(--text-neutral-strong)]">*</span>
         </label>
         <div
-          className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+          className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
           style={{ boxShadow: 'var(--shadow-100)' }}
         >
-          <span className="flex-1 text-[15px] leading-[22px] text-[var(--text-neutral-strong)]">
-            -Select-
-          </span>
-          <div className="flex items-center gap-2 h-full shrink-0">
+          <select
+            value={employmentType}
+            onChange={(e) => setEmploymentType(e.target.value)}
+            className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+          >
+            <option value="">-Select-</option>
+            {employmentTypes.map((type) => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+          <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
             <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
             <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
           </div>
@@ -126,13 +162,20 @@ export function JobInformationForm() {
           Minimum Experience
         </label>
         <div
-          className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+          className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
           style={{ boxShadow: 'var(--shadow-100)' }}
         >
-          <span className="flex-1 text-[15px] leading-[22px] text-[var(--text-neutral-strong)]">
-            -Select-
-          </span>
-          <div className="flex items-center gap-2 h-full shrink-0">
+          <select
+            value={minimumExperience}
+            onChange={(e) => setMinimumExperience(e.target.value)}
+            className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+          >
+            <option value="">-Select-</option>
+            {experienceLevels.map((level) => (
+              <option key={level} value={level}>{level}</option>
+            ))}
+          </select>
+          <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
             <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
             <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
           </div>
@@ -163,7 +206,7 @@ export function JobInformationForm() {
         <label className="text-[14px] font-medium leading-[20px] text-[var(--text-neutral-x-strong)]">
           Job Location<span className="text-[var(--text-neutral-strong)]">*</span>
         </label>
-        <div className="flex gap-[26px]">
+        <div className="flex flex-wrap gap-4">
           <JobLocationOption
             icon="building"
             label="In Office"
