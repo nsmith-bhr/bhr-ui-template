@@ -6,6 +6,7 @@ import {
   TextInput,
   FormDropdown,
   Checkbox,
+  Icon,
 } from '../../components';
 import { employees } from '../../data/employees';
 
@@ -176,6 +177,7 @@ const degreeOptions = [
 
 export default function NewEmployeePage() {
   const [sendPacket, setSendPacket] = useState(false);
+  const [accessLevel, setAccessLevel] = useState<'allow' | 'none'>('allow');
   const [formData, setFormData] = useState({
     // Personal
     employeeNumber: '',
@@ -921,57 +923,65 @@ export default function NewEmployeePage() {
         </FormSectionHeader>
 
         {/* Self-Service Access Section */}
-        <FormSectionHeader title="Self-Service Access" icon="lock">
+        <FormSectionHeader title="Self-Service Access" icon="user-lock">
           <div className="space-y-4">
             <div className="flex gap-6">
-              <div
-                className="
+              <button
+                type="button"
+                onClick={() => setAccessLevel('allow')}
+                className={`
                   w-[380px] h-[102px]
                   bg-[var(--surface-neutral-white)]
-                  border-2 border-[var(--border-neutral-medium)]
+                  border
+                  ${accessLevel === 'allow' ? 'border-[var(--color-primary-medium)]' : 'border-[var(--border-neutral-x-weak)]'}
                   rounded-[var(--radius-small)]
-                  p-4
-                  flex items-start gap-3
+                  p-5
+                  flex items-start gap-4
                   cursor-pointer
-                  hover:border-[var(--color-primary-medium)]
-                "
+                  transition-colors
+                `}
+                style={{ boxShadow: '1px 1px 0px 2px rgba(56, 49, 47, 0.03)' }}
               >
-                <div className="flex items-center justify-center w-10 h-10 bg-[#E8F5E9] rounded-lg">
-                  <span className="text-2xl">✓</span>
+                <div className="flex items-center justify-center w-12 h-12 bg-[var(--color-primary-strong)] rounded-[var(--radius-small)] shrink-0">
+                  <Icon name="user-check" size={24} className="text-white" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-[15px] text-[var(--text-neutral-xx-strong)] mb-1">
-                    Allow full-profile benefits access
-                  </h4>
-                  <p className="text-[13px] text-[var(--text-neutral-medium)]">
-                    This user can access everything on their own profile. They can edit, approve, and more.
+                <div className="flex-1 text-left">
+                  <div className="font-bold text-[16px] leading-[24px] text-[var(--color-primary-strong)] mb-0.5">
+                    Allow Access to BambooHR
+                  </div>
+                  <p className="text-[13px] leading-[19px] text-[var(--text-neutral-strong)]">
+                    They will be able to login to BambooHR using the access level you choose
                   </p>
                 </div>
-              </div>
-              <div
-                className="
+              </button>
+              <button
+                type="button"
+                onClick={() => setAccessLevel('none')}
+                className={`
                   w-[380px] h-[102px]
                   bg-[var(--surface-neutral-white)]
-                  border-2 border-[var(--border-neutral-medium)]
+                  border
+                  ${accessLevel === 'none' ? 'border-[var(--color-primary-medium)]' : 'border-[var(--border-neutral-x-weak)]'}
                   rounded-[var(--radius-small)]
-                  p-4
-                  flex items-start gap-3
+                  p-5
+                  flex items-start gap-4
                   cursor-pointer
-                  hover:border-[var(--color-primary-medium)]
-                "
+                  transition-colors
+                `}
+                style={{ boxShadow: '1px 1px 0px 2px rgba(56, 49, 47, 0.03)' }}
               >
-                <div className="flex items-center justify-center w-10 h-10 bg-[var(--surface-neutral-xx-weak)] rounded-lg">
-                  <span className="text-2xl">●</span>
+                <div className="flex items-center justify-center w-12 h-12 bg-[var(--surface-neutral-x-weak)] rounded-[var(--radius-small)] shrink-0">
+                  <Icon name="ban" size={24} className="text-[var(--color-primary-strong)]" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-[15px] text-[var(--text-neutral-xx-strong)] mb-1">
+                <div className="flex-1 text-left">
+                  <div className="font-medium text-[16px] leading-[24px] text-[var(--color-primary-strong)] mb-0.5">
                     No Access
-                  </h4>
-                  <p className="text-[13px] text-[var(--text-neutral-medium)]">
-                    This user cannot sign in until you turn on their access.
+                  </div>
+                  <p className="text-[13px] leading-[19px] text-[var(--text-neutral-strong)]">
+                    They won't have access and will not be able to login to BambooHR.
                   </p>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </FormSectionHeader>
