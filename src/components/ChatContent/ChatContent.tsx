@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Icon } from '../Icon';
 import { useChat } from '../../contexts/ChatContext';
 import type { ChatMessage } from '../../data/chatData';
+import MarkdownContent from '../MarkdownContent';
 
 interface ChatContentProps {
   className?: string;
@@ -59,10 +60,10 @@ export function ChatContent({ className = '' }: ChatContentProps) {
   }
 
   return (
-    <div className={`flex-1 flex flex-col bg-[var(--surface-neutral-white)] p-6 ${className}`}>
-      <div className="flex-1 flex flex-col bg-[var(--surface-neutral-xx-weak)] rounded-[20px] overflow-hidden">
+    <div className={`flex-1 flex flex-col min-h-0 bg-[var(--surface-neutral-white)] p-6 ${className}`}>
+      <div className="flex-1 flex flex-col min-h-0 bg-[var(--surface-neutral-xx-weak)] rounded-[20px] overflow-hidden">
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 min-h-0 overflow-y-auto">
           <div className="max-w-[800px] mx-auto px-8 py-6 flex flex-col gap-6">
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} />
@@ -133,9 +134,7 @@ function MessageBubble({ message }: MessageBubbleProps) {
 
       {/* AI Message */}
       <div className="pl-8">
-        <p className="text-[15px] leading-[22px] text-[var(--text-neutral-xx-strong)] whitespace-pre-line">
-          {message.text}
-        </p>
+        <MarkdownContent text={message.text} />
 
         {/* Suggestion Chips */}
         {message.suggestions && message.suggestions.length > 0 && (

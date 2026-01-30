@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Icon } from '../Icon';
 import { recentConversations } from '../../data/chatData';
 import type { ChatConversation } from '../../data/chatData';
+import MarkdownContent from '../MarkdownContent';
 
 interface AIChatPanelProps {
   isOpen: boolean;
@@ -255,12 +256,12 @@ export function AIChatPanel({ isOpen, onClose, isExpanded, onExpandChange }: AIC
           )}
 
           {/* Chat Content Area */}
-          <div className={`flex-1 flex flex-col ${isExpanded ? 'bg-[var(--surface-neutral-white)] p-6' : 'bg-[var(--surface-neutral-white)]'}`}>
+          <div className={`flex-1 flex flex-col min-h-0 ${isExpanded ? 'bg-[var(--surface-neutral-white)] p-6' : 'bg-[var(--surface-neutral-white)]'}`}>
             {isExpanded ? (
               /* Expanded view - grey rounded container */
-              <div className="flex-1 flex flex-col bg-[var(--surface-neutral-xx-weak)] rounded-[20px] overflow-hidden">
+              <div className="flex-1 flex flex-col min-h-0 bg-[var(--surface-neutral-xx-weak)] rounded-[20px] overflow-hidden">
                 {/* Messages Area */}
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 min-h-0 overflow-y-auto">
                   <div className="max-w-[800px] mx-auto px-8 py-6 flex flex-col gap-6">
                     {messages.map((message) => (
                       <div key={message.id}>
@@ -285,9 +286,7 @@ export function AIChatPanel({ isOpen, onClose, isExpanded, onExpandChange }: AIC
                             </div>
                             {/* AI Message */}
                             <div className="pl-8">
-                              <p className="text-[15px] leading-[22px] text-[var(--text-neutral-xx-strong)] whitespace-pre-line">
-                                {message.text}
-                              </p>
+                              <MarkdownContent text={message.text} />
                               {/* Suggestion Chips */}
                               {message.suggestions && message.suggestions.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-4">
@@ -340,7 +339,7 @@ export function AIChatPanel({ isOpen, onClose, isExpanded, onExpandChange }: AIC
               /* Panel view - original layout */
               <>
                 {/* Content Area */}
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 min-h-0 overflow-y-auto">
                   <div className="flex flex-col gap-5 p-5">
                     {messages.map((message) => (
                       <div key={message.id}>
@@ -354,9 +353,7 @@ export function AIChatPanel({ isOpen, onClose, isExpanded, onExpandChange }: AIC
                           </div>
                         ) : (
                           <div className="flex flex-col gap-4">
-                            <p className="text-[15px] leading-[22px] text-[var(--text-neutral-xx-strong)] whitespace-pre-line">
-                              {message.text}
-                            </p>
+                            <MarkdownContent text={message.text} />
                             {message.suggestions && message.suggestions.length > 0 && (
                               <div className="flex flex-col gap-2">
                                 {message.suggestions.map((suggestion, index) => (
