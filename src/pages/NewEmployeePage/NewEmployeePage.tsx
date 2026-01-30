@@ -7,6 +7,7 @@ import {
   FormDropdown,
   Checkbox,
   Icon,
+  DatePicker,
 } from '../../components';
 import { employees } from '../../data/employees';
 
@@ -342,11 +343,11 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <DatePicker
                   label="Birth Date"
                   value={formData.birthDate}
                   onChange={(value) => handleInputChange('birthDate', value)}
-                  type="date"
+                  placeholder="MM/DD/YYYY"
                 />
               </div>
             </div>
@@ -565,11 +566,11 @@ export default function NewEmployeePage() {
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <DatePicker
                   label="Hire Date"
                   value={formData.hireDate}
                   onChange={(value) => handleInputChange('hireDate', value)}
-                  type="date"
+                  placeholder="MM/DD/YYYY"
                 />
               </div>
             </div>
@@ -681,11 +682,11 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <TextInput
+                <DatePicker
                   label="Birth Date"
                   value={formData.dependentBirthDate}
                   onChange={(value) => handleInputChange('dependentBirthDate', value)}
-                  type="date"
+                  placeholder="MM/DD/YYYY"
                 />
               </div>
             </div>
@@ -887,20 +888,20 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4 items-center">
               <div className="w-[248px]">
-                <TextInput
+                <DatePicker
                   label="Start Date"
                   value={formData.startDate}
                   onChange={(value) => handleInputChange('startDate', value)}
-                  type="date"
+                  placeholder="MM/DD/YYYY"
                 />
               </div>
               <span className="text-[24px] text-[var(--text-neutral-strong)] pt-6">-</span>
               <div className="w-[248px]">
-                <TextInput
+                <DatePicker
                   label="End Date"
                   value={formData.endDate}
                   onChange={(value) => handleInputChange('endDate', value)}
-                  type="date"
+                  placeholder="MM/DD/YYYY"
                 />
               </div>
             </div>
