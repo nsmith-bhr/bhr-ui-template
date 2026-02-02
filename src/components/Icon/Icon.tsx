@@ -85,6 +85,9 @@ import {
   faAngleLeft,
   faHouse,
   faLaptop,
+  faSpinner,
+  faArrowLeft,
+  faRotateLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -223,7 +226,10 @@ export type IconName =
   | 'house'
   | 'laptop'
   | 'house-building'
-  | 'house-laptop';
+  | 'house-laptop'
+  | 'spinner'
+  | 'arrow-left'
+  | 'rotate-left';
 
 interface IconProps {
   name: IconName;
@@ -332,6 +338,9 @@ const faIconMap = {
   'laptop': faLaptop,
   'house-building': faBuilding,
   'house-laptop': faLaptop,
+  'spinner': faSpinner,
+  'arrow-left': faArrowLeft,
+  'rotate-left': faRotateLeft,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {

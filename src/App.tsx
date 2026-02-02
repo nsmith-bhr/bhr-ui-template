@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout';
-import { Home, MyInfo, People, Hiring, Reports, Files, Payroll, Settings, Inbox, NewEmployeePage, DatePickerDemo, CreateJobOpening } from './pages';
+import { Home, MyInfo, People, Hiring, Reports, Files, Payroll, Settings, Inbox, NewEmployeePage, DatePickerDemo, CreateJobOpening, JobAIPrototype } from './pages';
 import { JobOpeningDetail } from './pages/JobOpeningDetail';
 import { Chat } from './pages/Chat';
 import { ChatTransitionsDemo } from './pages/ChatTransitionsDemo';
@@ -22,6 +22,7 @@ function App() {
           <Route path="/text-reflow-demo" element={<TextReflowDemo />} />
           <Route path="/text-reflow-demo-2" element={<TextReflowDemo2 />} />
           <Route path="/datepicker-demo" element={<DatePickerDemo />} />
+          <Route path="/job-ai-prototype" element={<JobAIPrototype />} />
 
           {/* Regular routes with AppLayout */}
           <Route
