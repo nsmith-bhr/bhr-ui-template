@@ -74,31 +74,51 @@ export function JobInformationForm() {
   const fillItIn = async () => {
     if (!suggestion) return;
 
-    setShowAssistantBubble(false);
+    const fields = [
+      { set: setDepartment, value: suggestion.department, name: 'department' },
+      { set: setEmploymentType, value: suggestion.employmentType, name: 'employmentType' },
+      { set: setMinimumExperience, value: suggestion.experienceLevel, name: 'minimumExperience' },
+      {
+        set: setCompensation,
+        value: suggestion.salaryMin && suggestion.salaryMax
+          ? `$${parseInt(suggestion.salaryMin, 10).toLocaleString()}-${parseInt(suggestion.salaryMax, 10).toLocaleString()}/yr`
+          : '',
+        name: 'compensation'
+      },
+      {
+        set: () => {
+          setLocationInOffice(suggestion.workSchedule === 'In Office');
+          setLocationHybrid(suggestion.workSchedule === 'Hybrid');
+          setLocationRemote(suggestion.workSchedule === 'Remote');
+        },
+        value: true,
+        name: 'location'
+      }
+    ];
 
-    // Fill all fields - map the service data to the form structure
-    setDepartment(suggestion.department);
-    setEmploymentType(suggestion.employmentType);
-    setMinimumExperience(suggestion.experienceLevel);
-
-    // Map work schedule to location checkboxes
-    setLocationInOffice(suggestion.workSchedule === 'In Office');
-    setLocationHybrid(suggestion.workSchedule === 'Hybrid');
-    setLocationRemote(suggestion.workSchedule === 'Remote');
-
-    // Format compensation from salary range
-    if (suggestion.salaryMin && suggestion.salaryMax) {
-      const formattedComp = `$${parseInt(suggestion.salaryMin, 10).toLocaleString()}-${parseInt(suggestion.salaryMax, 10).toLocaleString()}/yr`;
-      setCompensation(formattedComp);
+    for (const field of fields) {
+      field.set(field.value);
+      setFilledFields(prev => new Set([...prev, field.name]));
+      await new Promise(r => setTimeout(r, 100));
     }
-
-    setFilledFields(new Set(['department', 'employmentType', 'minimumExperience', 'compensation', 'location']));
 
     // Show toast
     setShowToast(true);
   };
 
-  const undoField = (fieldName: string, setter: (val: any) => void, defaultValue: any = '') => {
+  const undoAll = () => {
+    setDepartment('');
+    setEmploymentType('');
+    setMinimumExperience('');
+    setCompensation('');
+    setLocationInOffice(false);
+    setLocationHybrid(false);
+    setLocationRemote(false);
+    setFilledFields(new Set());
+    setShowToast(false);
+  };
+
+  const clearField = (fieldName: string, setter: (val: any) => void, defaultValue: any = '') => {
     setter(defaultValue);
     setFilledFields(prev => {
       const next = new Set(prev);
@@ -107,7 +127,7 @@ export function JobInformationForm() {
     });
   };
 
-  const undoLocation = () => {
+  const clearLocation = () => {
     setLocationInOffice(false);
     setLocationHybrid(false);
     setLocationRemote(false);
@@ -123,11 +143,6 @@ export function JobInformationForm() {
     return suggestion.reasoning.find(r => r.field === fieldName);
   };
 
-  const FieldHighlight = ({ isHighlighted }: { isHighlighted: boolean }) =>
-    isHighlighted ? (
-      <div className="absolute inset-0 rounded-[var(--radius-xx-small)] border-2 border-[var(--color-primary-strong)] bg-[var(--color-primary-weak)]/20 pointer-events-none animate-pulse" />
-    ) : null;
-
   const FieldExplanation = ({ fieldName }: { fieldName: string }) => {
     const reasoning = getFieldReasoning(fieldName);
     if (!reasoning || focusedField !== fieldName || !filledFields.has(fieldName)) return null;
@@ -142,104 +157,118 @@ export function JobInformationForm() {
     );
   };
 
-  const UndoLink = ({ onClick }: { onClick: () => void }) => (
-    <button
-      onClick={onClick}
-      className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[12px] font-medium text-[var(--color-primary-strong)] hover:underline z-10"
-    >
-      <Icon name="rotate-left" size={10} />
-      Undo
-    </button>
-  );
+  const ClearButton = ({ onClick, show }: { onClick: () => void; show: boolean }) =>
+    show ? (
+      <button
+        onClick={onClick}
+        type="button"
+        className="absolute right-[40px] top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-[var(--icon-neutral-strong)] hover:text-[var(--text-neutral-x-strong)] z-10"
+      >
+        <Icon name="xmark" size={14} />
+      </button>
+    ) : null;
+
+  const GhostText = ({ value, show }: { value: string; show: boolean }) =>
+    show ? (
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-[15px] text-[var(--text-neutral-weak)] italic">
+        {value}
+      </div>
+    ) : null;
 
   return (
     <div className="flex flex-col gap-6 w-full">
-      {/* AI Inline Message */}
-      {isGenerating && (
-        <div
-          className="flex items-center gap-3 px-4 py-3 rounded-lg border animate-fadeIn"
-          style={{
-            background: 'linear-gradient(122.835deg, rgb(233, 243, 252) 0%, rgb(245, 238, 248) 100%)',
-            borderColor: 'rgba(56, 49, 47, 0.08)',
-            boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)'
-          }}
-        >
-          <Icon name="sparkles" size={16} className="text-[#0066CC] flex-shrink-0 animate-pulse" />
-          <div className="flex-1">
-            <div className="text-[14px] font-semibold text-[#0066CC] leading-[20px]">
-              Looking at similar roles{thinkingDots}
-            </div>
+      {/* Posting Title */}
+      <div className="flex items-end gap-4">
+        <div className="flex flex-col gap-1 w-[248px]">
+          <label className="text-[14px] font-medium leading-[20px] text-[var(--text-neutral-x-strong)]">
+            Posting Title<span className="text-[var(--text-neutral-strong)]">*</span>
+          </label>
+          <div
+            className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+            style={{ boxShadow: 'var(--shadow-100)' }}
+          >
+            <input
+              type="text"
+              value={postingTitle}
+              onChange={(e) => setPostingTitle(e.target.value)}
+              placeholder="Start typing job title..."
+              className="flex-1 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none"
+            />
           </div>
         </div>
-      )}
+        {isGenerating && (
+          <div className="flex items-center gap-2 h-10 animate-fadeIn">
+            <Icon name="sparkles" size={14} className="ai-inline-message-text flex-shrink-0 animate-pulse" />
+            <span className="ai-inline-message-text text-[13px] font-medium leading-[19px]">
+              Looking at similar roles{thinkingDots}
+            </span>
+          </div>
+        )}
+      </div>
 
       {showAssistantBubble && !isGenerating && suggestion && (
-        <div
-          className="flex items-center gap-3 px-4 py-3 rounded-lg border animate-fadeIn"
-          style={{
-            background: 'linear-gradient(122.835deg, rgb(233, 243, 252) 0%, rgb(245, 238, 248) 100%)',
-            borderColor: 'rgba(56, 49, 47, 0.08)',
-            boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)'
-          }}
-        >
-          <Icon name="sparkles" size={16} className="text-[#0066CC] flex-shrink-0" />
+        <div className="ai-inline-message flex items-center gap-3 px-4 py-3 rounded-lg border animate-fadeIn">
+          <Icon name="sparkles" size={16} className="ai-inline-message-text flex-shrink-0" />
           <div className="flex-1">
-            <div className="text-[14px] font-semibold text-[#0066CC] leading-[20px]">
-              {suggestion.confidence === 'high' && suggestion.matchCount > 0 && (
-                <>I can fill this out based on {suggestion.matchCount} similar {postingTitle.toLowerCase().replace(/\s+(i{1,3}|iv|v|vi{0,3}|senior|junior|lead|principal|staff)$/i, '')} {suggestion.matchCount === 1 ? 'role' : 'roles'} in your {suggestion.department} department.</>
-              )}
-              {suggestion.confidence === 'medium' && suggestion.matchCount > 0 && (
-                <>I can fill this out based on {suggestion.matchCount} similar {suggestion.matchCount === 1 ? 'role' : 'roles'} at your company.</>
-              )}
-              {suggestion.confidence === 'low' && (
-                <>I can suggest some defaults for this role, but I don't have similar postings to reference.</>
-              )}
-            </div>
-            <div className="text-[13px] text-[var(--text-neutral-medium)] leading-[19px]">
-              {suggestion.confidence === 'high' && 'High confidence'}
-              {suggestion.confidence === 'medium' && 'Medium confidence'}
-              {suggestion.confidence === 'low' && 'Low confidence'}
-            </div>
+            {filledFields.size > 0 ? (
+              <>
+                <div className="ai-inline-message-text text-[14px] font-semibold leading-[20px]">
+                  Filled {filledFields.size} {filledFields.size === 1 ? 'field' : 'fields'} based on similar roles
+                </div>
+                <div className="text-[13px] text-[var(--text-neutral-medium)] leading-[19px]">
+                  {suggestion.confidence === 'high' && 'High confidence'}
+                  {suggestion.confidence === 'medium' && 'Medium confidence'}
+                  {suggestion.confidence === 'low' && 'Low confidence'}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="ai-inline-message-text text-[14px] font-semibold leading-[20px]">
+                  {suggestion.confidence === 'high' && suggestion.matchCount > 0 && (
+                    <>I can fill this out based on {suggestion.matchCount} similar {postingTitle.toLowerCase().replace(/\s+(i{1,3}|iv|v|vi{0,3}|senior|junior|lead|principal|staff)$/i, '')} {suggestion.matchCount === 1 ? 'role' : 'roles'} in your {suggestion.department} department.</>
+                  )}
+                  {suggestion.confidence === 'medium' && suggestion.matchCount > 0 && (
+                    <>I can fill this out based on {suggestion.matchCount} similar {suggestion.matchCount === 1 ? 'role' : 'roles'} at your company.</>
+                  )}
+                  {suggestion.confidence === 'low' && (
+                    <>I can suggest some defaults for this role, but I don't have similar postings to reference.</>
+                  )}
+                </div>
+                <div className="text-[13px] text-[var(--text-neutral-medium)] leading-[19px]">
+                  {suggestion.confidence === 'high' && 'High confidence'}
+                  {suggestion.confidence === 'medium' && 'Medium confidence'}
+                  {suggestion.confidence === 'low' && 'Low confidence'}
+                </div>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={fillItIn}
-              className="h-8 px-3 text-[13px] font-semibold leading-[19px] text-[#00618b] bg-white rounded-full hover:opacity-90 transition-opacity relative"
-              style={{
-                border: '1px solid transparent',
-                backgroundImage: 'linear-gradient(white, white), linear-gradient(135deg, #AFD6A3 0%, #A6D0F3 34%, #D5BAE3 67%, #F6C499 96%)',
-                backgroundOrigin: 'border-box',
-                backgroundClip: 'padding-box, border-box',
-                boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)'
-              }}
-            >
-              Fill it In
-            </button>
-            <Button onClick={() => setShowAssistantBubble(false)} variant="standard" size="small">
-              No thanks
-            </Button>
+            {filledFields.size > 0 ? (
+              <Button onClick={undoAll} variant="standard" size="small">
+                Clear all
+              </Button>
+            ) : (
+              <>
+                <button
+                  onClick={fillItIn}
+                  className="ai-fill-button h-8 px-3 text-[13px] font-semibold leading-[19px] rounded-full hover:opacity-90 transition-opacity relative"
+                  style={{
+                    border: '1px solid transparent',
+                    backgroundOrigin: 'border-box',
+                    backgroundClip: 'padding-box, border-box',
+                    boxShadow: '1px 1px 0px 1px rgba(56, 49, 47, 0.04)'
+                  }}
+                >
+                  Fill it In
+                </button>
+                <Button onClick={() => setShowAssistantBubble(false)} variant="standard" size="small">
+                  No thanks
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}
-
-      {/* Posting Title */}
-      <div className="flex flex-col gap-1 w-[248px]">
-        <label className="text-[14px] font-medium leading-[20px] text-[var(--text-neutral-x-strong)]">
-          Posting Title<span className="text-[var(--text-neutral-strong)]">*</span>
-        </label>
-        <div
-          className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
-          style={{ boxShadow: 'var(--shadow-100)' }}
-        >
-          <input
-            type="text"
-            value={postingTitle}
-            onChange={(e) => setPostingTitle(e.target.value)}
-            placeholder="Start typing job title..."
-            className="flex-1 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none"
-          />
-        </div>
-      </div>
 
       {/* Toast */}
       {showToast && (
@@ -335,26 +364,27 @@ export function JobInformationForm() {
               className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
               style={{ boxShadow: 'var(--shadow-100)' }}
             >
+              <GhostText value={suggestion?.department || ''} show={!!suggestion && !department && filledFields.size === 0} />
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 onFocus={() => setFocusedField('department')}
                 onBlur={() => setFocusedField(null)}
-                className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+                className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] outline-none appearance-none cursor-pointer"
+                style={{
+                  color: suggestion && !department && filledFields.size === 0 ? 'transparent' : 'var(--text-neutral-strong)'
+                }}
               >
                 <option value="">-Select-</option>
                 {departments.map((dept) => (
                   <option key={dept} value={dept}>{dept}</option>
                 ))}
               </select>
+              <ClearButton onClick={() => clearField('department', setDepartment)} show={!!department} />
               <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
                 <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
                 <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
               </div>
-              <FieldHighlight isHighlighted={filledFields.has('department')} />
-              {filledFields.has('department') && department && (
-                <UndoLink onClick={() => undoField('department', setDepartment)} />
-              )}
             </div>
             <FieldExplanation fieldName="department" />
           </div>
@@ -371,26 +401,27 @@ export function JobInformationForm() {
             className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
+            <GhostText value={suggestion?.employmentType || ''} show={!!suggestion && !employmentType && filledFields.size === 0} />
             <select
               value={employmentType}
               onChange={(e) => setEmploymentType(e.target.value)}
               onFocus={() => setFocusedField('employmentType')}
               onBlur={() => setFocusedField(null)}
-              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] outline-none appearance-none cursor-pointer"
+              style={{
+                color: suggestion && !employmentType && filledFields.size === 0 ? 'transparent' : 'var(--text-neutral-strong)'
+              }}
             >
               <option value="">-Select-</option>
               {employmentTypes.map((type) => (
                 <option key={type} value={type}>{type}</option>
               ))}
             </select>
+            <ClearButton onClick={() => clearField('employmentType', setEmploymentType)} show={!!employmentType} />
             <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
               <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
               <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
             </div>
-            <FieldHighlight isHighlighted={filledFields.has('employmentType')} />
-            {filledFields.has('employmentType') && employmentType && (
-              <UndoLink onClick={() => undoField('employmentType', setEmploymentType)} />
-            )}
           </div>
           <FieldExplanation fieldName="employmentType" />
         </div>
@@ -406,26 +437,27 @@ export function JobInformationForm() {
             className="relative flex items-center h-10 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
+            <GhostText value={suggestion?.experienceLevel || ''} show={!!suggestion && !minimumExperience && filledFields.size === 0} />
             <select
               value={minimumExperience}
               onChange={(e) => setMinimumExperience(e.target.value)}
               onFocus={() => setFocusedField('experienceLevel')}
               onBlur={() => setFocusedField(null)}
-              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] outline-none appearance-none cursor-pointer"
+              className="flex-1 h-full pl-3 pr-10 bg-transparent text-[15px] leading-[22px] outline-none appearance-none cursor-pointer"
+              style={{
+                color: suggestion && !minimumExperience && filledFields.size === 0 ? 'transparent' : 'var(--text-neutral-strong)'
+              }}
             >
               <option value="">-Select-</option>
               {experienceLevels.map((level) => (
                 <option key={level} value={level}>{level}</option>
               ))}
             </select>
+            <ClearButton onClick={() => clearField('minimumExperience', setMinimumExperience)} show={!!minimumExperience} />
             <div className="absolute right-3 pointer-events-none flex items-center gap-2 h-6">
               <div className="w-px h-full bg-[var(--border-neutral-medium)]" />
               <Icon name="caret-down" size={16} className="text-[var(--icon-neutral-strong)]" />
             </div>
-            <FieldHighlight isHighlighted={filledFields.has('minimumExperience')} />
-            {filledFields.has('minimumExperience') && minimumExperience && (
-              <UndoLink onClick={() => undoField('minimumExperience', setMinimumExperience)} />
-            )}
           </div>
           <FieldExplanation fieldName="experienceLevel" />
         </div>
@@ -438,7 +470,7 @@ export function JobInformationForm() {
         </label>
         <div className="relative">
           <div
-            className="flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+            className="relative flex items-center h-10 px-3 py-2 bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
             style={{ boxShadow: 'var(--shadow-100)' }}
           >
             <input
@@ -447,13 +479,19 @@ export function JobInformationForm() {
               onChange={(e) => setCompensation(e.target.value)}
               onFocus={() => setFocusedField('salaryRange')}
               onBlur={() => setFocusedField(null)}
-              placeholder="e.g. $10-15 Hourly DOE"
+              placeholder={
+                suggestion && !compensation && filledFields.size === 0 && suggestion.salaryMin && suggestion.salaryMax
+                  ? ''
+                  : 'e.g. $10-15 Hourly DOE'
+              }
               className="flex-1 bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[#878280] outline-none"
             />
-            <FieldHighlight isHighlighted={filledFields.has('compensation')} />
-            {filledFields.has('compensation') && compensation && (
-              <UndoLink onClick={() => undoField('compensation', setCompensation)} />
+            {suggestion && !compensation && filledFields.size === 0 && suggestion.salaryMin && suggestion.salaryMax && (
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-[15px] text-[var(--text-neutral-weak)] italic">
+                ${parseInt(suggestion.salaryMin, 10).toLocaleString()}-${parseInt(suggestion.salaryMax, 10).toLocaleString()}/yr
+              </div>
             )}
+            <ClearButton onClick={() => clearField('compensation', setCompensation)} show={!!compensation} />
           </div>
           <FieldExplanation fieldName="salaryRange" />
         </div>
@@ -465,13 +503,13 @@ export function JobInformationForm() {
           <label className="text-[14px] font-medium leading-[20px] text-[var(--text-neutral-x-strong)]">
             Job Location<span className="text-[var(--text-neutral-strong)]">*</span>
           </label>
-          {filledFields.has('location') && (
+          {(locationInOffice || locationHybrid || locationRemote) && (
             <button
-              onClick={undoLocation}
+              onClick={clearLocation}
               className="flex items-center gap-1 text-[12px] font-medium text-[var(--color-primary-strong)] hover:underline"
             >
-              <Icon name="rotate-left" size={10} />
-              Undo
+              <Icon name="xmark" size={12} />
+              Clear
             </button>
           )}
         </div>
@@ -500,9 +538,6 @@ export function JobInformationForm() {
               onChange={setLocationRemote}
             />
           </div>
-          {filledFields.has('location') && (
-            <div className="absolute inset-0 rounded-lg border-2 border-[var(--color-primary-strong)] bg-[var(--color-primary-weak)]/10 pointer-events-none animate-pulse" />
-          )}
           <FieldExplanation fieldName="location" />
         </div>
       </div>
@@ -513,7 +548,7 @@ export function JobInformationForm() {
           Job Description<span className="text-[var(--text-neutral-strong)]">*</span>
         </label>
         <div
-          className="flex items-start h-[183px] px-4 py-[9px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
+          className="relative flex items-start h-[183px] px-4 py-[9px] bg-[var(--surface-neutral-white)] border border-[var(--border-neutral-medium)] rounded-[var(--radius-xx-small)]"
           style={{ boxShadow: 'var(--shadow-100)' }}
         >
           <textarea
@@ -522,6 +557,15 @@ export function JobInformationForm() {
             placeholder="Add your job description here..."
             className="flex-1 h-full bg-transparent text-[15px] leading-[22px] text-[var(--text-neutral-strong)] placeholder:text-[var(--text-neutral-weak)] outline-none resize-none"
           />
+          {jobDescription && (
+            <button
+              onClick={() => setJobDescription('')}
+              type="button"
+              className="absolute right-3 top-3 w-6 h-6 flex items-center justify-center text-[var(--icon-neutral-strong)] hover:text-[var(--text-neutral-x-strong)]"
+            >
+              <Icon name="xmark" size={14} />
+            </button>
+          )}
         </div>
       </div>
 
