@@ -20,7 +20,7 @@ export function SuccessNotification({
   if (!show) return null;
 
   return (
-    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 animate-slideDown">
+    <div className="fixed top-5 left-1/2 z-50 animate-slideDown">
       <div
         className="flex items-start gap-6 px-4 py-3 rounded-[16px] w-[832px]"
         style={{
