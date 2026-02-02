@@ -250,7 +250,7 @@ export function JobInformationForm() {
               <>
                 <button
                   onClick={fillItIn}
-                  className="ai-fill-button h-8 px-3 text-[13px] font-semibold leading-[19px] rounded-full hover:opacity-90 transition-opacity relative"
+                  className="ai-fill-button h-8 px-4 text-[15px] font-semibold leading-[22px] rounded-full hover:opacity-90 transition-opacity relative"
                   style={{
                     border: '1px solid transparent',
                     backgroundOrigin: 'border-box',
