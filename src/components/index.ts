@@ -34,3 +34,6 @@ export { Card } from './Card';
 export { OrgChartView } from './OrgChart';
 export { FormSectionHeader } from './FormSectionHeader';
 export { InfoBanner } from './InfoBanner';
+export { JobLocationOption } from './JobLocationOption';
+export { JobWizardSidebar } from './JobWizardSidebar';
+export { JobInformationForm } from './JobInformationForm';

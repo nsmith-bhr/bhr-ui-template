@@ -82,6 +82,9 @@ import {
   faUserLock,
   faUserCheck,
   faBan,
+  faAngleLeft,
+  faHouse,
+  faLaptop,
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -215,7 +218,12 @@ export type IconName =
   | 'grid-2-plus'
   | 'user-lock'
   | 'user-check'
-  | 'ban';
+  | 'ban'
+  | 'angle-left'
+  | 'house'
+  | 'laptop'
+  | 'house-building'
+  | 'house-laptop';
 
 interface IconProps {
   name: IconName;
@@ -319,6 +327,11 @@ const faIconMap = {
   'user-lock': faUserLock,
   'user-check': faUserCheck,
   'ban': faBan,
+  'angle-left': faAngleLeft,
+  'house': faHouse,
+  'laptop': faLaptop,
+  'house-building': faBuilding,
+  'house-laptop': faLaptop,
 } as const;
 
 export function Icon({ name, size = 24, className = '', variant = 'solid', style }: IconProps) {

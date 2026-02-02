@@ -9,3 +9,4 @@ export { Settings } from './Settings';
 export { Inbox } from './Inbox';
 export { NewEmployeePage } from './NewEmployeePage';
 export { DatePickerDemo } from './DatePickerDemo';
+export { CreateJobOpening } from './CreateJobOpening';
