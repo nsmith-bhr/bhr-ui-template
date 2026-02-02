@@ -7,7 +7,6 @@ import {
   FormDropdown,
   Checkbox,
   Icon,
-  DatePicker,
 } from '../../components';
 import { employees } from '../../data/employees';
 
@@ -343,7 +342,8 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <DatePicker
+                <TextInput
+                  type="date"
                   label="Birth Date"
                   value={formData.birthDate}
                   onChange={(value) => handleInputChange('birthDate', value)}
@@ -566,7 +566,8 @@ export default function NewEmployeePage() {
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <DatePicker
+                <TextInput
+                  type="date"
                   label="Hire Date"
                   value={formData.hireDate}
                   onChange={(value) => handleInputChange('hireDate', value)}
@@ -682,7 +683,8 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4">
               <div className="w-[248px]">
-                <DatePicker
+                <TextInput
+                  type="date"
                   label="Birth Date"
                   value={formData.dependentBirthDate}
                   onChange={(value) => handleInputChange('dependentBirthDate', value)}
@@ -888,7 +890,8 @@ export default function NewEmployeePage() {
             </div>
             <div className="flex gap-4 items-center">
               <div className="w-[248px]">
-                <DatePicker
+                <TextInput
+                  type="date"
                   label="Start Date"
                   value={formData.startDate}
                   onChange={(value) => handleInputChange('startDate', value)}
@@ -897,7 +900,8 @@ export default function NewEmployeePage() {
               </div>
               <span className="text-[24px] text-[var(--text-neutral-strong)] pt-6">-</span>
               <div className="w-[248px]">
-                <DatePicker
+                <TextInput
+                  type="date"
                   label="End Date"
                   value={formData.endDate}
                   onChange={(value) => handleInputChange('endDate', value)}
