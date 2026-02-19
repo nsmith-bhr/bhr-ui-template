@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Icon, Button, TextInput } from '../../components';
+import { Icon, Button, TextInput, CountryCodePhoneInput } from '../../components';
 import { currentEmployee } from '../../data/currentEmployee';
 import { PerformanceTabContent } from './PerformanceTabContent';
 import { JobTabContent } from './JobTabContent';
@@ -19,8 +19,9 @@ const MORE_TAB = { id: 'more', label: 'More' };
 
 export function MyInfo() {
   const [activeTab, setActiveTab] = useState('personal');
+  const [homePhoneCountryKey, setHomePhoneCountryKey] = useState('US:+1');
+  const [homePhoneNumber, setHomePhoneNumber] = useState('(801) 234-2239');
   const [showFloatingHeader, setShowFloatingHeader] = useState(false);
-  const [floatingHeaderHeight, setFloatingHeaderHeight] = useState<number | null>(null);
   const [visibleTabCount, setVisibleTabCount] = useState(profileTabs.length);
   const [floatingVisibleTabCount, setFloatingVisibleTabCount] = useState(profileTabs.length);
   const [showMoreDropdown, setShowMoreDropdown] = useState(false);
@@ -69,25 +70,6 @@ export function MyInfo() {
 
     return () => {
       observer.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const headerElement = headerRef.current;
-    if (!headerElement) {
-      return;
-    }
-
-    const updateHeight = () => {
-      setFloatingHeaderHeight(Math.ceil(headerElement.getBoundingClientRect().height));
-    };
-
-    updateHeight();
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(headerElement);
-
-    return () => {
-      resizeObserver.disconnect();
     };
   }, []);
 
@@ -196,11 +178,8 @@ export function MyInfo() {
     <div className="h-full overflow-auto">
       {/* Floating Compact Header */}
       {showFloatingHeader && (
-        <div
-          className="sticky top-0 z-50 flex items-start animate-[floatDown_220ms_ease-out]"
-          style={floatingHeaderHeight ? { minHeight: `${floatingHeaderHeight}px` } : undefined}
-        >
-          <div className="bg-[var(--color-primary-strong)] rounded-[var(--radius-small)] pl-10 pr-8 py-2 shadow-[2px_2px_0px_2px_rgba(56,49,47,0.05)] w-full overflow-visible">
+        <div className="sticky top-0 z-50 pointer-events-none flex items-start animate-[floatDown_220ms_ease-out]">
+          <div className="pointer-events-auto bg-[var(--color-primary-strong)] rounded-[var(--radius-small)] pl-10 pr-8 py-2 shadow-[2px_2px_0px_2px_rgba(56,49,47,0.05)] w-full overflow-visible">
             <div className="flex items-center gap-3">
               {/* Avatar and Name */}
               <div className="flex items-center gap-3">
@@ -609,11 +588,13 @@ export function MyInfo() {
             </div>
 
             {/* Home Phone */}
-            <div className="mb-6 max-w-[224px]">
-              <TextInput
+            <div className="mb-6 max-w-[288px]">
+              <CountryCodePhoneInput
                 label="Home Phone"
-                value="648-555-2415"
-                icon="phone"
+                countryKey={homePhoneCountryKey}
+                phoneNumber={homePhoneNumber}
+                onCountryChange={setHomePhoneCountryKey}
+                onPhoneNumberChange={setHomePhoneNumber}
               />
             </div>
 
